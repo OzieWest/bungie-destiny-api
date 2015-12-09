@@ -1,6 +1,8 @@
-package com.company;
+package com.soramusoka.destinyApiClient;
 
 import org.json.JSONArray;
+
+import java.lang.*;
 import java.util.ArrayList;
 
 public class AccountSummary {

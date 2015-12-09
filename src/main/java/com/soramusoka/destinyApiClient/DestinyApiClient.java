@@ -1,4 +1,4 @@
-package com.company;
+package com.soramusoka.destinyApiClient;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -6,12 +6,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class DestinyApiClient {
-    public Request Request;
+    public IRequest Request;
     private String _hostName = "http://www.bungie.net";
     private String _rootPath = "/Platform/Destiny";
     private Integer _platform = 2;
 
-    public DestinyApiClient(Request request, Integer platform) {
+    public DestinyApiClient(IRequest request, Integer platform) {
         this.Request = request;
         this._platform = platform;
     }

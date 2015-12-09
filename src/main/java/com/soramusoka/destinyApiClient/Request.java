@@ -1,4 +1,4 @@
-package com.company;
+package com.soramusoka.destinyApiClient;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 
 import java.io.InputStream;
 
-public class Request {
+public class Request implements IRequest {
     private String _apiKey;
     public Logger logger;
 

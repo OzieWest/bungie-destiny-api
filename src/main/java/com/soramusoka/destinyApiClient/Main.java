@@ -1,4 +1,4 @@
-package com.company;
+package com.soramusoka.destinyApiClient;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;

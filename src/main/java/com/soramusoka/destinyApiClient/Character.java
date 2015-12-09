@@ -1,4 +1,4 @@
-package com.company;
+package com.soramusoka.destinyApiClient;
 
 public class Character {
     public String backgroundPath;
