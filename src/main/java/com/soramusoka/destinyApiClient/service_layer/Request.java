@@ -1,4 +1,4 @@
-package com.soramusoka.destinyApiClient;
+package com.soramusoka.destinyApiClient.service_layer;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -6,6 +6,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.log4j.Logger;
+import com.soramusoka.destinyApiClient.service_layer.IRequest;
 
 import java.io.InputStream;
 

@@ -1,5 +1,9 @@
 package com.soramusoka.destinyApiClient;
 
+import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummary;
+import com.soramusoka.destinyApiClient.dto_layer.membership_id.MembershipId;
+import com.soramusoka.destinyApiClient.repository_layer.DestinyApiClient;
+import com.soramusoka.destinyApiClient.service_layer.Request;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -13,16 +17,22 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         CommandLine cmd = getConfig(args);
-        // Logger logger = getLogger("main");
+        Logger logger = getLogger("main");
 
         String apiKey = cmd.getOptionValue("apikey");
         String userName = cmd.getOptionValue("username");
 
         Request request = new Request(apiKey, getLogger("Request"));
         DestinyApiClient destinyApiClient = new DestinyApiClient(request, 2);
-        String membershipId = destinyApiClient.getMembershipId(userName);
-        AccountSummary accountSummary = destinyApiClient.getAccountSummary(membershipId);
-        System.out.println(accountSummary.characters.size());
+        MembershipId[] membershipIdArray = destinyApiClient.getMembershipId(userName);
+
+        if (membershipIdArray.length == 0) {
+            logger.info("Didn't find any users with that name");
+        } else {
+            MembershipId membershipId = membershipIdArray[0];
+            AccountSummary accountSummary = destinyApiClient.getAccountSummary(membershipId.membershipId);
+            logger.info(accountSummary.characters.length);
+        }
     }
 
     public static CommandLine getConfig(String[] args) throws Exception {

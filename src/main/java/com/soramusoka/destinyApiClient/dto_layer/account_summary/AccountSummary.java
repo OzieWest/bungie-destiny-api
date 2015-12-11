@@ -1,16 +1,14 @@
-package com.soramusoka.destinyApiClient;
-
-import org.json.JSONArray;
+package com.soramusoka.destinyApiClient.dto_layer.account_summary;
 
 import java.lang.*;
-import java.util.ArrayList;
 
 public class AccountSummary {
     public String membershipId;
     public Integer membershipType;
     public String clanName;
     public Integer grimoireScore;
-    public JSONArray vendorReceipts;
+    public Object vendorReceipts;
     public Integer versions;
-    public ArrayList<Character> characters;
+    public Character[] characters;
+    public Object inventory;
 }
