@@ -24,15 +24,6 @@ public class Main {
 
         Request request = new Request(apiKey, getLogger("Request"));
         DestinyApiClient destinyApiClient = new DestinyApiClient(request, 2);
-        MembershipId[] membershipIdArray = destinyApiClient.getMembershipId(userName);
-
-        if (membershipIdArray.length == 0) {
-            logger.info("Didn't find any users with that name");
-        } else {
-            MembershipId membershipId = membershipIdArray[0];
-            AccountSummary accountSummary = destinyApiClient.getAccountSummary(membershipId.membershipId);
-            logger.info(accountSummary.characters.length);
-        }
     }
 
     public static CommandLine getConfig(String[] args) throws Exception {

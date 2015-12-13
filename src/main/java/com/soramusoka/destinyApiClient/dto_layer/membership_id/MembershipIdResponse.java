@@ -1,10 +1,7 @@
 package com.soramusoka.destinyApiClient.dto_layer.membership_id;
 
-public class MembershipIdResponse {
+import com.soramusoka.destinyApiClient.dto_layer.ServerResponse;
+
+public class MembershipIdResponse extends ServerResponse {
     public MembershipId[] Response;
-    public Integer ErrorCode;
-    public Integer ThrottleSeconds;
-    public String ErrorStatus;
-    public String Message;
-    public Object MessageData;
 }

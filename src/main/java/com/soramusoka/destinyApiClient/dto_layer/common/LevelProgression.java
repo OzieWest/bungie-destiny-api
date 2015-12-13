@@ -1,4 +1,4 @@
-package com.soramusoka.destinyApiClient.dto_layer.account_summary;
+package com.soramusoka.destinyApiClient.dto_layer.common;
 
 public class LevelProgression {
     public Integer dailyProgress;

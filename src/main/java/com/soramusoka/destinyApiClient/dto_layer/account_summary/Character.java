@@ -1,5 +1,7 @@
 package com.soramusoka.destinyApiClient.dto_layer.account_summary;
 
+import com.soramusoka.destinyApiClient.dto_layer.common.LevelProgression;
+
 public class Character {
     public String emblemPath;
     public String backgroundPath;

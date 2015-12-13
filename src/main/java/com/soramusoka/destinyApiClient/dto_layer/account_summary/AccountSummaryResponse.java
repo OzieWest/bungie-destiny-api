@@ -1,12 +1,8 @@
 package com.soramusoka.destinyApiClient.dto_layer.account_summary;
 
 import com.soramusoka.destinyApiClient.dto_layer.ResponseData;
+import com.soramusoka.destinyApiClient.dto_layer.ServerResponse;
 
-public class AccountSummaryResponse {
+public class AccountSummaryResponse extends ServerResponse {
     public ResponseData<AccountSummary> Response;
-    public Integer ErrorCode;
-    public Integer ThrottleSeconds;
-    public String ErrorStatus;
-    public String Message;
-    public Object MessageData;
 }
