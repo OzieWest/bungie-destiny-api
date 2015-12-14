@@ -1,5 +1,7 @@
 package com.soramusoka.destinyApiClient.dto_layer.account_summary;
 
+import com.soramusoka.destinyApiClient.dto_layer.common.StatItem;
+
 public class StatGroup {
     public StatItem STAT_DEFENSE;
     public StatItem STAT_INTELLECT;

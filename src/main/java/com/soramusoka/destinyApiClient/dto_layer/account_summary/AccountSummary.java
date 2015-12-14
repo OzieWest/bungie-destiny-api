@@ -4,11 +4,11 @@ import java.lang.*;
 
 public class AccountSummary {
     public String membershipId;
-    public Integer membershipType;
+    public int membershipType;
     public String clanName;
-    public Integer grimoireScore;
+    public int grimoireScore;
     public Object vendorReceipts;
-    public Integer versions;
+    public int versions;
     public Character[] characters;
     public Object inventory;
 }

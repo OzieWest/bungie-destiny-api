@@ -1,16 +1,16 @@
 package com.soramusoka.destinyApiClient.dto_layer.account_summary;
 
 public class Customization {
-    public Double personality;
-    public Double face;
-    public Double skinColor;
-    public Double lipColor;
-    public Double eyeColor;
-    public Double hairColor;
-    public Double featureColor;
-    public Double decalColor;
-    public Boolean wearHelmet;
-    public Integer hairIndex;
-    public Integer featureIndex;
-    public Integer decalIndex;
+    public double personality;
+    public double face;
+    public double skinColor;
+    public double lipColor;
+    public double eyeColor;
+    public double hairColor;
+    public double featureColor;
+    public double decalColor;
+    public boolean wearHelmet;
+    public int hairIndex;
+    public int featureIndex;
+    public int decalIndex;
 }

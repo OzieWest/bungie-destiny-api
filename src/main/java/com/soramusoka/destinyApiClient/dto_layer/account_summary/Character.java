@@ -5,11 +5,11 @@ import com.soramusoka.destinyApiClient.dto_layer.common.LevelProgression;
 public class Character {
     public String emblemPath;
     public String backgroundPath;
-    public Double emblemHash;
-    public Integer characterLevel;
-    public Integer baseCharacterLevel;
-    public Boolean isPrestigeLevel;
-    public Float percentToNextLevel;
+    public double emblemHash;
+    public int characterLevel;
+    public int baseCharacterLevel;
+    public boolean isPrestigeLevel;
+    public float percentToNextLevel;
     public LevelProgression levelProgression;
     public CharacterBase characterBase;
 }

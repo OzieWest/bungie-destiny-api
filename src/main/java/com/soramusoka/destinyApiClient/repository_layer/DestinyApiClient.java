@@ -4,6 +4,8 @@ import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummary;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummaryResponse;
 import com.soramusoka.destinyApiClient.dto_layer.character_activities.CharacterActivities;
 import com.soramusoka.destinyApiClient.dto_layer.character_activities.CharacterActivitiesResponse;
+import com.soramusoka.destinyApiClient.dto_layer.character_inventory.CharacterInventoryGroup;
+import com.soramusoka.destinyApiClient.dto_layer.character_inventory.CharacterInventoryResponse;
 import com.soramusoka.destinyApiClient.dto_layer.character_progression.CharacterProgression;
 import com.soramusoka.destinyApiClient.dto_layer.character_progression.CharacterProgressionResponse;
 import com.soramusoka.destinyApiClient.dto_layer.membership_id.MembershipId;
@@ -30,6 +32,9 @@ public class DestinyApiClient {
         return this._hostName + this._rootPath + url;
     }
 
+    /**
+     * Returns a list of Destiny memberships given a full Gamertag or PSN ID.
+     */
     public MembershipId[] getMembershipId(String userName) throws Exception {
         String url = this.formUrl("/SearchDestinyPlayer/" + this._platform + "/" + userName);
         String data = this.Request.getUrl(url);
@@ -39,6 +44,9 @@ public class DestinyApiClient {
         return response.Response;
     }
 
+    /**
+     * Returns Destiny account information for the supplied membership in a compact summary form.
+     */
     public AccountSummary getAccountSummary(String membershipId) throws Exception {
         String url = this.formUrl("/" + this._platform + "/Account/" + membershipId);
         String data = this.Request.getUrl(url);
@@ -48,6 +56,9 @@ public class DestinyApiClient {
         return response.Response.data;
     }
 
+    /**
+     * Gets historical stats definitions.
+     */
     public StatsDefinitionGroup getStatsDefinition() throws Exception {
         String url = this.formUrl("/Stats/Definition/");
         String data = this.Request.getUrl(url);
@@ -57,6 +68,9 @@ public class DestinyApiClient {
         return response.Response;
     }
 
+    /**
+     * Provides the progression details for the supplied character.
+     */
     public CharacterProgression getCharacterProgression(String membershipId, String characterId) throws Exception {
         String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Character/" + characterId + "/Progression/");
         String data = this.Request.getUrl(url);
@@ -66,11 +80,26 @@ public class DestinyApiClient {
         return response.Response.data;
     }
 
+    /**
+     * Retrieve the inventory for the supplied character.
+     */
     public CharacterActivities getCharacterActivities(String membershipId, String characterId) throws Exception {
         String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Character/" + characterId + "/Activities/");
         String data = this.Request.getUrl(url);
 
         CharacterActivitiesResponse response = this._mapper.readValue(data, CharacterActivitiesResponse.class);
+        if (response.ErrorCode != 1) throw new Exception(response.ErrorStatus + ": " + response.Message);
+        return response.Response.data;
+    }
+
+    /**
+     * Returns summary information for the inventory for the supplied character.
+     */
+    public CharacterInventoryGroup getCharacterInventory(String membershipId, String characterId) throws Exception {
+        String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Character/" + characterId + "/Inventory/Summary/");
+        String data = this.Request.getUrl(url);
+
+        CharacterInventoryResponse response = this._mapper.readValue(data, CharacterInventoryResponse.class);
         if (response.ErrorCode != 1) throw new Exception(response.ErrorStatus + ": " + response.Message);
         return response.Response.data;
     }

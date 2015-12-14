@@ -2,14 +2,14 @@ package com.soramusoka.destinyApiClient.dto_layer.stats_definition;
 
 public class StatsDefinition {
     public String statId;
-    public Integer group;
-    public Integer[] periodTypes;
-    public Integer[] modes;
-    public Integer category;
+    public int group;
+    public int[] periodTypes;
+    public int[] modes;
+    public int category;
     public String statName;
-    public Integer unitType;
+    public int unitType;
     public String unitLabel;
-    public Integer weight;
+    public int weight;
     public String statDescription;
     public String iconImage;
 }
