@@ -12,11 +12,9 @@ import java.io.InputStream;
 
 public class Request implements IRequest {
     private String _apiKey;
-    public Logger logger;
 
-    public Request(String key, Logger logger) {
+    public Request(String key) {
         this._apiKey = key;
-        this.logger = logger;
     }
 
     public String getUrl(String uri) throws Exception {
@@ -25,9 +23,7 @@ public class Request implements IRequest {
         try (CloseableHttpClient client = HttpClients.createDefault();
              CloseableHttpResponse response = client.execute(req)) {
             InputStream inputStream = response.getEntity().getContent();
-            String result = IOUtils.toString(inputStream, "utf-8");
-            logger.debug(uri + " - " + result);
-            return result;
+            return IOUtils.toString(inputStream, "utf-8");
         }
     }
 }

@@ -22,7 +22,7 @@ public class Main {
         String apiKey = cmd.getOptionValue("apikey");
         String userName = cmd.getOptionValue("username");
 
-        Request request = new Request(apiKey, getLogger("Request"));
+        Request request = new Request(apiKey);
         DestinyApiClient destinyApiClient = new DestinyApiClient(request, 2);
     }
 

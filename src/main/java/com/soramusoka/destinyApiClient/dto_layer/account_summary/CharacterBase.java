@@ -13,8 +13,8 @@ public class CharacterBase {
     public double raceHash;
     public double genderHash;
     public double classHash;
-    public int currentActivityHash;
-    public int lastCompletedStoryHash;
+    public double currentActivityHash;
+    public double lastCompletedStoryHash;
     public int grimoireScore;
     public int genderType;
     public int classType;

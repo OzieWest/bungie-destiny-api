@@ -4,5 +4,5 @@ import com.soramusoka.destinyApiClient.dto_layer.ResponseData;
 import com.soramusoka.destinyApiClient.dto_layer.ServerResponse;
 
 public class CharacterProgressionResponse extends ServerResponse {
-    public ResponseData<CharacterProgression> Response;
+    public ResponseData<CharacterProgression, Object> Response;
 }
