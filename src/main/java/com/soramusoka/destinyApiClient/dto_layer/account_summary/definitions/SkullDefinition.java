@@ -1,4 +1,4 @@
-package com.soramusoka.destinyApiClient.dto_layer.account_summary;
+package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 
 public class SkullDefinition {
     public String displayName;

@@ -1,6 +1,6 @@
-package com.soramusoka.destinyApiClient.dto_layer.account_summary;
+package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 
-public class ActivityDefinition {
+public class ActivityDefinition extends BaseDefinition {
     public double activityHash;
     public String activityName;
     public String activityDescription;
@@ -21,6 +21,4 @@ public class ActivityDefinition {
     public Object[] rewards;
     public SkullDefinition[] skulls;
     public boolean isPlaylist;
-    public double hash;
-    public int index;
 }

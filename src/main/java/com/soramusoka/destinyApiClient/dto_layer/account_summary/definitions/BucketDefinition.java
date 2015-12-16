@@ -1,6 +1,6 @@
-package com.soramusoka.destinyApiClient.dto_layer.account_summary;
+package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 
-public class BucketDefinition {
+public class BucketDefinition extends BaseDefinition {
     public double bucketHash;
     public String bucketName;
     public String bucketDescription;
@@ -12,6 +12,4 @@ public class BucketDefinition {
     public int location;
     public boolean hasTransferDestination;
     public boolean enabled;
-    public double hash;
-    public int index;
 }

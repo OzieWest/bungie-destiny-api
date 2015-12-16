@@ -1,6 +1,6 @@
-package com.soramusoka.destinyApiClient.dto_layer.account_summary;
+package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 
-public class ActivityTypeDefinition {
+public class ActivityTypeDefinition extends BaseDefinition {
     public double activityTypeHash;
     public String identifier;
     public String activityTypeName;
@@ -15,6 +15,4 @@ public class ActivityTypeDefinition {
     public String enlargedHiddenOverrideVirtualPath;
     public String enlargedTooltipBackgroundVirtualPath;
     public int order;
-    public double has;
-    public int index;
 }

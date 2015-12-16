@@ -1,6 +1,6 @@
-package com.soramusoka.destinyApiClient.dto_layer.account_summary;
+package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 
-public class TalentGridDefinition {
+public class TalentGridDefinition extends BaseDefinition {
     public double gridHash;
     public int maxGridLevel;
     public int gridLevelPerColumn;
@@ -10,6 +10,4 @@ public class TalentGridDefinition {
     public int calcProgressToMaxLevel;
     public Object[] exclusiveSets;
     public int[] independentNodeIndexes;
-    public double hash;
-    public int index;
 }

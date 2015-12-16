@@ -24,6 +24,11 @@ public class Main {
 
         Request request = new Request(apiKey);
         DestinyApiClient destinyApiClient = new DestinyApiClient(request, 2);
+        MembershipId[] membershipIds = destinyApiClient.getMembershipId("hesbolaa");
+
+        Thread.sleep(50);
+        destinyApiClient.getAccountSummary(membershipIds[0].membershipId, true);
+
     }
 
     public static CommandLine getConfig(String[] args) throws Exception {

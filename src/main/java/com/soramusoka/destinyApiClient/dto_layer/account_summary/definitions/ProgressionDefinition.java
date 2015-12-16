@@ -1,6 +1,6 @@
-package com.soramusoka.destinyApiClient.dto_layer.account_summary;
+package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 
-public class ProgressionDefinition {
+public class ProgressionDefinition extends BaseDefinition {
     public double progressionHash;
     public String name;
     public int scope;
@@ -8,6 +8,4 @@ public class ProgressionDefinition {
     public boolean repeatLastStep;
     public String icon;
     public ProgressionStepDefinition[] steps;
-    public double hash;
-    public int index;
 }

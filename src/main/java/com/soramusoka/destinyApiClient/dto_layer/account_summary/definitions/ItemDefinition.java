@@ -1,6 +1,8 @@
-package com.soramusoka.destinyApiClient.dto_layer.account_summary;
+package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 
-public class ItemDefinition {
+import com.soramusoka.destinyApiClient.dto_layer.account_summary.Animation;
+
+public class ItemDefinition extends BaseDefinition {
     public double itemHash;
     public String itemName;
     public String itemDescription;
@@ -47,6 +49,4 @@ public class ItemDefinition {
     public boolean allowActions;
     public double questTrackingUnlockValueHash;
     public double bountyResetUnlockHash;
-    public double hash;
-    public int index;
 }

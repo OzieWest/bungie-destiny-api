@@ -1,6 +1,6 @@
-package com.soramusoka.destinyApiClient.dto_layer.account_summary;
+package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 
-public class ItemCategoryDefinition {
+public class ItemCategoryDefinition extends BaseDefinition {
     public double itemCategoryHash;
     public String identifier;
     public boolean visible;
@@ -10,6 +10,4 @@ public class ItemCategoryDefinition {
     public int grantDestinyItemType;
     public int grantDestinySubType;
     public int grantDestinyClass;
-    public double hash;
-    public int index;
 }

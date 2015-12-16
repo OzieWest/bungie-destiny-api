@@ -1,6 +1,6 @@
-package com.soramusoka.destinyApiClient.dto_layer.account_summary;
+package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 
-public class ClassDefinition {
+public class ClassDefinition extends BaseDefinition {
     public double classHash;
     public int classType;
     public String className;
@@ -8,6 +8,4 @@ public class ClassDefinition {
     public String classNameFemale;
     public String classIdentifier;
     public String mentorVendorIdentifier;
-    public double hash;
-    public int index;
 }
