@@ -48,7 +48,7 @@ public class DestinyApiClient {
      * Returns Destiny account information for the supplied membership in a compact summary form.
      */
     public AccountSummary getAccountSummary(String membershipId, boolean withDefinitions) throws Exception {
-        String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "?definitions=" + withDefinitions);
+        String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Summary" + "?definitions=" + withDefinitions);
         String data = this.Request.getUrl(url);
 
         AccountSummaryResponse response = this._mapper.readValue(data, AccountSummaryResponse.class);

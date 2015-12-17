@@ -5,9 +5,9 @@ public class TalentGridDefinition extends BaseDefinition {
     public int maxGridLevel;
     public int gridLevelPerColumn;
     public double progressionHash;
-    public Object[] nodes;
+    public TalentGridNode[] nodes;
     public int calcMaxGridLevel;
     public int calcProgressToMaxLevel;
-    public Object[] exclusiveSets;
+    public ExclusiveSet[] exclusiveSets;
     public int[] independentNodeIndexes;
 }

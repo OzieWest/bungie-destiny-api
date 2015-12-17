@@ -1,5 +1,7 @@
 package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 
+import com.soramusoka.destinyApiClient.dto_layer.account_summary.RewardGroup;
+
 public class ActivityDefinition extends BaseDefinition {
     public double activityHash;
     public String activityName;
@@ -18,7 +20,7 @@ public class ActivityDefinition extends BaseDefinition {
     public double activityTypeHash;
     public int tier;
     public String pgcrImage;
-    public Object[] rewards;
+    public RewardGroup[] rewards;
     public SkullDefinition[] skulls;
     public boolean isPlaylist;
 }

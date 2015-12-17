@@ -6,9 +6,9 @@ public class AccountSummary {
     public String membershipId;
     public int membershipType;
     public String clanName;
+    public String clanTag;
     public int grimoireScore;
-    public Object vendorReceipts;
     public int versions;
     public Character[] characters;
-    public Object inventory;
+    public Inventory inventory;
 }

@@ -1,6 +1,10 @@
 package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.Animation;
+import com.soramusoka.destinyApiClient.dto_layer.account_summary.ComputedStat;
+import com.soramusoka.destinyApiClient.dto_layer.account_summary.ItemSource;
+
+import java.util.LinkedHashMap;
 
 public class ItemDefinition extends BaseDefinition {
     public double itemHash;
@@ -16,11 +20,11 @@ public class ItemDefinition extends BaseDefinition {
     public String itemTypeName;
     public double bucketTypeHash;
     public double primaryBaseStatHash;
-    public Object stats;
+    public LinkedHashMap<String, ComputedStat> stats;
     public double[] perkHashes;
     public int specialItemType;
     public double talentGridHash;
-    public Object equippingBlock;
+    public EquippingBlock equippingBlock;
     public boolean hasGeometry;
     public double statGroupHash;
     public int[] itemLevels;
@@ -32,7 +36,7 @@ public class ItemDefinition extends BaseDefinition {
     public String actionDescription;
     public Animation[] animations;
     public Object values;
-    public Object[] sources;
+    public ItemSource[] sources;
     public int itemType;
     public int itemSubType;
     public int classType;
