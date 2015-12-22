@@ -2,7 +2,7 @@ package com.soramusoka.destinyApiClient.repository_layer;
 
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummary;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummaryResponse;
-import com.soramusoka.destinyApiClient.dto_layer.character_activities.CharacterActivities;
+import com.soramusoka.destinyApiClient.dto_layer.character_activities.CharacterActivityGroup;
 import com.soramusoka.destinyApiClient.dto_layer.character_activities.CharacterActivitiesResponse;
 import com.soramusoka.destinyApiClient.dto_layer.character_inventory.CharacterInventoryGroup;
 import com.soramusoka.destinyApiClient.dto_layer.character_inventory.CharacterInventoryResponse;
@@ -97,8 +97,15 @@ public class DestinyApiClient {
     /**
      * Retrieve the inventory for the supplied character.
      */
-    public CharacterActivities getCharacterActivities(String membershipId, String characterId) throws Exception {
-        String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Character/" + characterId + "/Activities/");
+    public CharacterActivityGroup getCharacterActivities(String membershipId, String characterId) throws Exception {
+        return this.getCharacterActivities(membershipId, characterId, false);
+    }
+
+    /**
+     * Retrieve the inventory for the supplied character.
+     */
+    public CharacterActivityGroup getCharacterActivities(String membershipId, String characterId, boolean withDefinitions) throws Exception {
+        String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Character/" + characterId + "/Activities" + "?definitions=" + withDefinitions);
         String data = this.Request.getUrl(url);
 
         CharacterActivitiesResponse response = this._mapper.readValue(data, CharacterActivitiesResponse.class);

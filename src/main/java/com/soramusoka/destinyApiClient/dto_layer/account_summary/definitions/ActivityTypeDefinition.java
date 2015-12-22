@@ -16,5 +16,7 @@ public class ActivityTypeDefinition extends BaseDefinition {
     public String enlargedCompletedBackgroundVirtualPath;
     public String enlargedHiddenOverrideVirtualPath;
     public String enlargedTooltipBackgroundVirtualPath;
+    public String statGroup;
+    public String friendlyUrlId;
     public int order;
 }

@@ -1,11 +1,11 @@
-package com.soramusoka.destinyApiClient.dto_layer.account_summary;
+package com.soramusoka.destinyApiClient.dto_layer.common;
 
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions.*;
 import com.soramusoka.destinyApiClient.dto_layer.common.CharacterProgressionDefinition;
 
 import java.util.LinkedHashMap;
 
-public class AccountSummaryDefinitionGroup {
+public class BaseAccountDefinitionGroup {
     public LinkedHashMap<String, RaceDefinition> races;
     public LinkedHashMap<String, GenderDefinition> genders;
     public LinkedHashMap<String, ClassDefinition> classes;
