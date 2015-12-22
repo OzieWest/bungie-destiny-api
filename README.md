@@ -15,7 +15,7 @@ MembershipId[] result = destinyApiClient.getMembershipId(userName);
 
 ###### Returns Destiny account information for the supplied membership in a compact summary form.
 ```java
-AccountSummary result = destinyApiClient.getAccountSummary(membershipId);
+AccountSummary result = destinyApiClient.getAccountSummary(membershipId, withDefinitions);
 ```
 
 ###### Gets historical stats definitions.
