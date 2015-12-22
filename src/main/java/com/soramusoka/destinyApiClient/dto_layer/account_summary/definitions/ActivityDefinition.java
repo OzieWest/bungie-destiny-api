@@ -1,6 +1,7 @@
 package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.RewardGroup;
+import com.soramusoka.destinyApiClient.dto_layer.common.BaseDefinition;
 
 public class ActivityDefinition extends BaseDefinition {
     public double activityHash;

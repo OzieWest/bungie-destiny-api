@@ -79,7 +79,14 @@ public class DestinyApiClient {
      * Provides the progression details for the supplied character.
      */
     public CharacterProgression getCharacterProgression(String membershipId, String characterId) throws Exception {
-        String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Character/" + characterId + "/Progression/");
+        return this.getCharacterProgression(membershipId, characterId, false);
+    }
+
+    /**
+     * Provides the progression details for the supplied character.
+     */
+    public CharacterProgression getCharacterProgression(String membershipId, String characterId, boolean withDefinitions) throws Exception {
+        String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Character/" + characterId + "/Progression" + "?definitions=" + withDefinitions);
         String data = this.Request.getUrl(url);
 
         CharacterProgressionResponse response = this._mapper.readValue(data, CharacterProgressionResponse.class);

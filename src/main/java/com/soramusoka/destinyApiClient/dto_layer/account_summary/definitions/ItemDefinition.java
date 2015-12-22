@@ -3,6 +3,7 @@ package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.Animation;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.ComputedStat;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.ItemSource;
+import com.soramusoka.destinyApiClient.dto_layer.common.BaseDefinition;
 
 import java.util.LinkedHashMap;
 
