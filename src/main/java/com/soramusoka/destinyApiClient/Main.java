@@ -27,7 +27,8 @@ public class Main {
 
         // destinyApiClient.getAccountSummary("4611686018428868193", true);
         // destinyApiClient.getCharacterProgression("4611686018428868193", "2305843009345925219", true);
-        destinyApiClient.getCharacterActivities("4611686018428868193", "2305843009345925219", true);
+        // destinyApiClient.getCharacterActivities("4611686018428868193", "2305843009345925219", true);
+        destinyApiClient.getCharacterInventorySummary("4611686018428868193", "2305843009345925219", true);
     }
 
     public static CommandLine getConfig(String[] args) throws Exception {

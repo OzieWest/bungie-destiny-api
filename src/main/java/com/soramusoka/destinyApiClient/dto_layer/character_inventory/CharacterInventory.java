@@ -2,7 +2,7 @@ package com.soramusoka.destinyApiClient.dto_layer.character_inventory;
 
 import com.soramusoka.destinyApiClient.dto_layer.common.StatItem;
 
-public class CharacterInventoryItem {
+public class CharacterInventory {
     public double itemHash;
     public String itemId;
     public int quantity;

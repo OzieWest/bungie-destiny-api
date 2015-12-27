@@ -78,13 +78,6 @@ public class DestinyApiClient {
     /**
      * Provides the progression details for the supplied character.
      */
-    public CharacterProgression getCharacterProgression(String membershipId, String characterId) throws Exception {
-        return this.getCharacterProgression(membershipId, characterId, false);
-    }
-
-    /**
-     * Provides the progression details for the supplied character.
-     */
     public CharacterProgression getCharacterProgression(String membershipId, String characterId, boolean withDefinitions) throws Exception {
         String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Character/" + characterId + "/Progression" + "?definitions=" + withDefinitions);
         String data = this.Request.getUrl(url);
@@ -95,10 +88,10 @@ public class DestinyApiClient {
     }
 
     /**
-     * Retrieve the inventory for the supplied character.
+     * Provides the progression details for the supplied character.
      */
-    public CharacterActivityGroup getCharacterActivities(String membershipId, String characterId) throws Exception {
-        return this.getCharacterActivities(membershipId, characterId, false);
+    public CharacterProgression getCharacterProgression(String membershipId, String characterId) throws Exception {
+        return this.getCharacterProgression(membershipId, characterId, false);
     }
 
     /**
@@ -114,14 +107,28 @@ public class DestinyApiClient {
     }
 
     /**
+     * Retrieve the inventory for the supplied character.
+     */
+    public CharacterActivityGroup getCharacterActivities(String membershipId, String characterId) throws Exception {
+        return this.getCharacterActivities(membershipId, characterId, false);
+    }
+
+    /**
      * Returns summary information for the inventory for the supplied character.
      */
-    public CharacterInventoryGroup getCharacterInventory(String membershipId, String characterId) throws Exception {
-        String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Character/" + characterId + "/Inventory/Summary/");
+    public CharacterInventoryGroup getCharacterInventorySummary(String membershipId, String characterId, boolean withDefinitions) throws Exception {
+        String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Character/" + characterId + "/Inventory/Summary" + "?definitions=" + withDefinitions);
         String data = this.Request.getUrl(url);
 
         CharacterInventoryResponse response = this._mapper.readValue(data, CharacterInventoryResponse.class);
         if (response.ErrorCode != 1) throw new Exception(response.ErrorStatus + ": " + response.Message);
         return response.Response.data;
+    }
+
+    /**
+     * Returns summary information for the inventory for the supplied character.
+     */
+    public CharacterInventoryGroup getCharacterInventorySummary(String membershipId, String characterId) throws Exception {
+        return this.getCharacterInventorySummary(membershipId, characterId, false);
     }
 }
