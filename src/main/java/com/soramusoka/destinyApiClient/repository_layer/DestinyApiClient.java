@@ -2,6 +2,7 @@ package com.soramusoka.destinyApiClient.repository_layer;
 
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummary;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummaryResponse;
+import com.soramusoka.destinyApiClient.dto_layer.activity_history_stats.ActivityHistoryStatsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.character_activities.CharacterActivityGroup;
 import com.soramusoka.destinyApiClient.dto_layer.character_activities.CharacterActivitiesResponse;
 import com.soramusoka.destinyApiClient.dto_layer.character_inventory.CharacterInventoryGroup;
@@ -130,5 +131,36 @@ public class DestinyApiClient {
      */
     public CharacterInventoryGroup getCharacterInventorySummary(String membershipId, String characterId) throws Exception {
         return this.getCharacterInventorySummary(membershipId, characterId, false);
+    }
+
+    /**
+     * Gets activity history stats for indicated character.
+     */
+    public Object getActivityHistoryStats(String membershipId, String characterId, int count, int page, String mode, boolean withDefinitions) throws Exception {
+        String query = "definitions=" + withDefinitions +
+                "&page=" + page +
+                "&count=" + count +
+                "&mode=" + (mode == null ? "None" : mode);
+
+        String url = this.formUrl("/Stats/ActivityHistory/" + this._platform + "/" + membershipId + "/" + characterId + "/?" + query);
+        String data = this.Request.getUrl(url);
+
+        ActivityHistoryStatsResponse response = this._mapper.readValue(data, ActivityHistoryStatsResponse.class);
+        if (response.ErrorCode != 1) throw new Exception(response.ErrorStatus + ": " + response.Message);
+        return response.Response.data;
+    }
+
+    /**
+     * Gets activity history stats for indicated character.
+     */
+    public Object getActivityHistoryStats(String membershipId, String characterId, int count, int page, String mode) throws Exception {
+        return this.getActivityHistoryStats(membershipId, characterId, count, page, mode, false);
+    }
+
+    /**
+     * Gets activity history stats for indicated character.
+     */
+    public Object getActivityHistoryStats(String membershipId, String characterId, int count, int page) throws Exception {
+        return this.getActivityHistoryStats(membershipId, characterId, count, page, "None", false);
     }
 }
