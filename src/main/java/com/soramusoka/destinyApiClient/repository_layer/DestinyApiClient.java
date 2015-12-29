@@ -11,6 +11,7 @@ import com.soramusoka.destinyApiClient.dto_layer.character_inventory.CharacterIn
 import com.soramusoka.destinyApiClient.dto_layer.character_inventory.CharacterInventoryResponse;
 import com.soramusoka.destinyApiClient.dto_layer.character_progression.CharacterProgression;
 import com.soramusoka.destinyApiClient.dto_layer.character_progression.CharacterProgressionResponse;
+import com.soramusoka.destinyApiClient.dto_layer.custom_errors.DestinyApiClientException;
 import com.soramusoka.destinyApiClient.dto_layer.membership_id.MembershipId;
 import com.soramusoka.destinyApiClient.dto_layer.membership_id.MembershipIdResponse;
 import com.soramusoka.destinyApiClient.dto_layer.stats_definition.StatsDefinitionGroup;
@@ -22,10 +23,10 @@ public class DestinyApiClient {
     public IRequest Request;
     private String _hostName = "http://www.bungie.net";
     private String _rootPath = "/Platform/Destiny";
-    private Integer _platform = 2;
+    private int _platform = 0;
     private ObjectMapper _mapper = null;
 
-    public DestinyApiClient(IRequest request, Integer platform) {
+    public DestinyApiClient(IRequest request, int platform) {
         this._mapper = new ObjectMapper();
         this.Request = request;
         this._platform = platform;
@@ -38,150 +39,182 @@ public class DestinyApiClient {
     /**
      * Returns a list of Destiny memberships given a full Gamertag or PSN ID.
      */
-    public MembershipId[] getMembershipId(String userName) throws Exception {
-        String url = this.formUrl("/SearchDestinyPlayer/" + this._platform + "/" + userName);
-        String data = this.Request.getUrl(url);
+    public MembershipId[] getMembershipId(String userName) throws DestinyApiClientException {
+        try {
+            String url = this.formUrl("/SearchDestinyPlayer/" + this._platform + "/" + userName);
+            String data = this.Request.getUrl(url);
 
-        MembershipIdResponse response = this._mapper.readValue(data, MembershipIdResponse.class);
-        if (response.ErrorCode != 1) throw new Exception(response.ErrorStatus + ": " + response.Message);
-        return response.Response;
+            MembershipIdResponse response = this._mapper.readValue(data, MembershipIdResponse.class);
+            if (response.ErrorCode != 1) throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            return response.Response;
+        } catch (Exception e) {
+            throw new DestinyApiClientException(e);
+        }
     }
 
     /**
      * Returns Destiny account information for the supplied membership in a compact summary form.
      */
-    public AccountSummary getAccountSummary(String membershipId, boolean withDefinitions) throws Exception {
-        String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Summary" + "?definitions=" + withDefinitions);
-        String data = this.Request.getUrl(url);
+    public AccountSummary getAccountSummary(String membershipId, boolean withDefinitions) throws DestinyApiClientException {
+        try {
+            String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Summary" + "?definitions=" + withDefinitions);
+            String data = this.Request.getUrl(url);
 
-        AccountSummaryResponse response = this._mapper.readValue(data, AccountSummaryResponse.class);
-        if (response.ErrorCode != 1) throw new Exception(response.ErrorStatus + ": " + response.Message);
-        return response.Response.data;
+            AccountSummaryResponse response = this._mapper.readValue(data, AccountSummaryResponse.class);
+            if (response.ErrorCode != 1) throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            return response.Response.data;
+        } catch (Exception e) {
+            throw new DestinyApiClientException(e);
+        }
     }
 
     /**
      * Returns Destiny account information for the supplied membership in a compact summary form.
      */
-    public AccountSummary getAccountSummary(String membershipId) throws Exception {
+    public AccountSummary getAccountSummary(String membershipId) throws DestinyApiClientException {
         return this.getAccountSummary(membershipId, false);
     }
 
     /**
      * Gets historical stats definitions.
      */
-    public StatsDefinitionGroup getStatsDefinition() throws Exception {
-        String url = this.formUrl("/Stats/Definition/");
-        String data = this.Request.getUrl(url);
+    public StatsDefinitionGroup getStatsDefinition() throws DestinyApiClientException {
+        try {
+            String url = this.formUrl("/Stats/Definition/");
+            String data = this.Request.getUrl(url);
 
-        StatsDefinitionResponse response = this._mapper.readValue(data, StatsDefinitionResponse.class);
-        if (response.ErrorCode != 1) throw new Exception(response.ErrorStatus + ": " + response.Message);
-        return response.Response;
+            StatsDefinitionResponse response = this._mapper.readValue(data, StatsDefinitionResponse.class);
+            if (response.ErrorCode != 1) throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            return response.Response;
+        } catch (Exception e) {
+            throw new DestinyApiClientException(e);
+        }
     }
 
     /**
      * Provides the progression details for the supplied character.
      */
-    public CharacterProgression getCharacterProgression(String membershipId, String characterId, boolean withDefinitions) throws Exception {
-        String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Character/" + characterId + "/Progression" + "?definitions=" + withDefinitions);
-        String data = this.Request.getUrl(url);
+    public CharacterProgression getCharacterProgression(String membershipId, String characterId, boolean withDefinitions) throws DestinyApiClientException {
+        try {
+            String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Character/" + characterId + "/Progression" + "?definitions=" + withDefinitions);
+            String data = this.Request.getUrl(url);
 
-        CharacterProgressionResponse response = this._mapper.readValue(data, CharacterProgressionResponse.class);
-        if (response.ErrorCode != 1) throw new Exception(response.ErrorStatus + ": " + response.Message);
-        return response.Response.data;
+            CharacterProgressionResponse response = this._mapper.readValue(data, CharacterProgressionResponse.class);
+            if (response.ErrorCode != 1) throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            return response.Response.data;
+        } catch (Exception e) {
+            throw new DestinyApiClientException(e);
+        }
     }
 
     /**
      * Provides the progression details for the supplied character.
      */
-    public CharacterProgression getCharacterProgression(String membershipId, String characterId) throws Exception {
+    public CharacterProgression getCharacterProgression(String membershipId, String characterId) throws DestinyApiClientException {
         return this.getCharacterProgression(membershipId, characterId, false);
     }
 
     /**
      * Retrieve the inventory for the supplied character.
      */
-    public CharacterActivityGroup getCharacterActivities(String membershipId, String characterId, boolean withDefinitions) throws Exception {
-        String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Character/" + characterId + "/Activities" + "?definitions=" + withDefinitions);
-        String data = this.Request.getUrl(url);
+    public CharacterActivityGroup getCharacterActivities(String membershipId, String characterId, boolean withDefinitions) throws DestinyApiClientException {
+        try {
+            String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Character/" + characterId + "/Activities" + "?definitions=" + withDefinitions);
+            String data = this.Request.getUrl(url);
 
-        CharacterActivitiesResponse response = this._mapper.readValue(data, CharacterActivitiesResponse.class);
-        if (response.ErrorCode != 1) throw new Exception(response.ErrorStatus + ": " + response.Message);
-        return response.Response.data;
+            CharacterActivitiesResponse response = this._mapper.readValue(data, CharacterActivitiesResponse.class);
+            if (response.ErrorCode != 1) throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            return response.Response.data;
+        } catch (Exception e) {
+            throw new DestinyApiClientException(e);
+        }
     }
 
     /**
      * Retrieve the inventory for the supplied character.
      */
-    public CharacterActivityGroup getCharacterActivities(String membershipId, String characterId) throws Exception {
+    public CharacterActivityGroup getCharacterActivities(String membershipId, String characterId) throws DestinyApiClientException {
         return this.getCharacterActivities(membershipId, characterId, false);
     }
 
     /**
      * Returns summary information for the inventory for the supplied character.
      */
-    public CharacterInventoryGroup getCharacterInventorySummary(String membershipId, String characterId, boolean withDefinitions) throws Exception {
-        String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Character/" + characterId + "/Inventory/Summary" + "?definitions=" + withDefinitions);
-        String data = this.Request.getUrl(url);
+    public CharacterInventoryGroup getCharacterInventorySummary(String membershipId, String characterId, boolean withDefinitions) throws DestinyApiClientException {
+        try {
+            String url = this.formUrl("/" + this._platform + "/Account/" + membershipId + "/Character/" + characterId + "/Inventory/Summary" + "?definitions=" + withDefinitions);
+            String data = this.Request.getUrl(url);
 
-        CharacterInventoryResponse response = this._mapper.readValue(data, CharacterInventoryResponse.class);
-        if (response.ErrorCode != 1) throw new Exception(response.ErrorStatus + ": " + response.Message);
-        return response.Response.data;
+            CharacterInventoryResponse response = this._mapper.readValue(data, CharacterInventoryResponse.class);
+            if (response.ErrorCode != 1) throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            return response.Response.data;
+        } catch (Exception e) {
+            throw new DestinyApiClientException(e);
+        }
     }
 
     /**
      * Returns summary information for the inventory for the supplied character.
      */
-    public CharacterInventoryGroup getCharacterInventorySummary(String membershipId, String characterId) throws Exception {
+    public CharacterInventoryGroup getCharacterInventorySummary(String membershipId, String characterId) throws DestinyApiClientException {
         return this.getCharacterInventorySummary(membershipId, characterId, false);
     }
 
     /**
      * Gets activity history stats for indicated character.
      */
-    public Object getActivityHistoryStats(String membershipId, String characterId, int count, int page, String mode, boolean withDefinitions) throws Exception {
-        String query = "definitions=" + withDefinitions +
-                "&page=" + page +
-                "&count=" + count +
-                "&mode=" + (mode == null ? "None" : mode);
+    public Object getActivityHistoryStats(String membershipId, String characterId, int count, int page, String mode, boolean withDefinitions) throws DestinyApiClientException {
+        try {
+            String query = "definitions=" + withDefinitions +
+                    "&page=" + page +
+                    "&count=" + count +
+                    "&mode=" + (mode == null ? "None" : mode);
 
-        String url = this.formUrl("/Stats/ActivityHistory/" + this._platform + "/" + membershipId + "/" + characterId + "/?" + query);
-        String data = this.Request.getUrl(url);
+            String url = this.formUrl("/Stats/ActivityHistory/" + this._platform + "/" + membershipId + "/" + characterId + "/?" + query);
+            String data = this.Request.getUrl(url);
 
-        ActivityHistoryStatsResponse response = this._mapper.readValue(data, ActivityHistoryStatsResponse.class);
-        if (response.ErrorCode != 1) throw new Exception(response.ErrorStatus + ": " + response.Message);
-        return response.Response.data;
+            ActivityHistoryStatsResponse response = this._mapper.readValue(data, ActivityHistoryStatsResponse.class);
+            if (response.ErrorCode != 1) throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            return response.Response.data;
+        } catch (Exception e) {
+            throw new DestinyApiClientException(e);
+        }
     }
 
     /**
      * Gets activity history stats for indicated character.
      */
-    public Object getActivityHistoryStats(String membershipId, String characterId, int count, int page, String mode) throws Exception {
+    public Object getActivityHistoryStats(String membershipId, String characterId, int count, int page, String mode) throws DestinyApiClientException {
         return this.getActivityHistoryStats(membershipId, characterId, count, page, mode, false);
     }
 
     /**
      * Gets activity history stats for indicated character.
      */
-    public Object getActivityHistoryStats(String membershipId, String characterId, int count, int page) throws Exception {
+    public Object getActivityHistoryStats(String membershipId, String characterId, int count, int page) throws DestinyApiClientException {
         return this.getActivityHistoryStats(membershipId, characterId, count, page, "None", false);
     }
 
     /**
      * Gets all activities the character has participated in together with aggregate statistics for those activities.
      */
-    public AggregateActivityStatsGroup getAggregateActivityStats(String membershipId, String characterId, boolean withDefinitions) throws Exception {
-        String url = this.formUrl("/Stats/AggregateActivityStats/" + this._platform + "/" + membershipId + "/" + characterId + "?definitions=" + withDefinitions);
-        String data = this.Request.getUrl(url);
+    public AggregateActivityStatsGroup getAggregateActivityStats(String membershipId, String characterId, boolean withDefinitions) throws DestinyApiClientException {
+        try {
+            String url = this.formUrl("/Stats/AggregateActivityStats/" + this._platform + "/" + membershipId + "/" + characterId + "?definitions=" + withDefinitions);
+            String data = this.Request.getUrl(url);
 
-        AggregateActivityStatsResponse response = this._mapper.readValue(data, AggregateActivityStatsResponse.class);
-        if (response.ErrorCode != 1) throw new Exception(response.ErrorStatus + ": " + response.Message);
-        return response.Response.data;
+            AggregateActivityStatsResponse response = this._mapper.readValue(data, AggregateActivityStatsResponse.class);
+            if (response.ErrorCode != 1) throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            return response.Response.data;
+        } catch (Exception e) {
+            throw new DestinyApiClientException(e);
+        }
     }
 
     /**
      * Gets all activities the character has participated in together with aggregate statistics for those activities.
      */
-    public AggregateActivityStatsGroup getAggregateActivityStats(String membershipId, String characterId) throws Exception {
+    public AggregateActivityStatsGroup getAggregateActivityStats(String membershipId, String characterId) throws DestinyApiClientException {
         return this.getAggregateActivityStats(membershipId, characterId, false);
     }
 }
