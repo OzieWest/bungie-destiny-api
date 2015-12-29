@@ -3,6 +3,8 @@ package com.soramusoka.destinyApiClient.repository_layer;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummary;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummaryResponse;
 import com.soramusoka.destinyApiClient.dto_layer.activity_history_stats.ActivityHistoryStatsResponse;
+import com.soramusoka.destinyApiClient.dto_layer.aggregate_activity_stats.AggregateActivityStatsGroup;
+import com.soramusoka.destinyApiClient.dto_layer.aggregate_activity_stats.AggregateActivityStatsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.character_activities.CharacterActivityGroup;
 import com.soramusoka.destinyApiClient.dto_layer.character_activities.CharacterActivitiesResponse;
 import com.soramusoka.destinyApiClient.dto_layer.character_inventory.CharacterInventoryGroup;
@@ -162,5 +164,24 @@ public class DestinyApiClient {
      */
     public Object getActivityHistoryStats(String membershipId, String characterId, int count, int page) throws Exception {
         return this.getActivityHistoryStats(membershipId, characterId, count, page, "None", false);
+    }
+
+    /**
+     * Gets all activities the character has participated in together with aggregate statistics for those activities.
+     */
+    public AggregateActivityStatsGroup getAggregateActivityStats(String membershipId, String characterId, boolean withDefinitions) throws Exception {
+        String url = this.formUrl("/Stats/AggregateActivityStats/" + this._platform + "/" + membershipId + "/" + characterId + "?definitions=" + withDefinitions);
+        String data = this.Request.getUrl(url);
+
+        AggregateActivityStatsResponse response = this._mapper.readValue(data, AggregateActivityStatsResponse.class);
+        if (response.ErrorCode != 1) throw new Exception(response.ErrorStatus + ": " + response.Message);
+        return response.Response.data;
+    }
+
+    /**
+     * Gets all activities the character has participated in together with aggregate statistics for those activities.
+     */
+    public AggregateActivityStatsGroup getAggregateActivityStats(String membershipId, String characterId) throws Exception {
+        return this.getAggregateActivityStats(membershipId, characterId, false);
     }
 }
