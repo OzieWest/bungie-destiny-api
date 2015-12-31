@@ -1,5 +1,6 @@
 package com.soramusoka.destinyApiClient.repository_layer;
 
+import com.soramusoka.destinyApiClient.dto_layer.MembershipType;
 import com.soramusoka.destinyApiClient.dto_layer.account_items.AccountItemsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummaryResponse;
 import com.soramusoka.destinyApiClient.dto_layer.activity_history_stats.ActivityHistoryStatsResponse;
@@ -17,10 +18,10 @@ public class DestinyApiClient {
     public IRequest Request;
     private String _hostName = "http://www.bungie.net";
     private String _rootPath = "/Platform/Destiny";
-    private int _membershipType = 0;
+    private MembershipType _membershipType = MembershipType.XBOX;
     private ObjectMapper _mapper = null;
 
-    public DestinyApiClient(IRequest request, int membershipType) {
+    public DestinyApiClient(IRequest request, MembershipType membershipType) {
         this._mapper = new ObjectMapper();
         this.Request = request;
         this._membershipType = membershipType;
@@ -38,7 +39,7 @@ public class DestinyApiClient {
      */
     public MembershipIdResponse getMembershipId(String userName) throws DestinyApiClientException {
         try {
-            String url = this.formUrl("/SearchDestinyPlayer/" + this._membershipType + "/" + userName);
+            String url = this.formUrl("/SearchDestinyPlayer/" + this._membershipType.getValue() + "/" + userName);
             String data = this.Request.getUrl(url);
 
             MembershipIdResponse response = this._mapper.readValue(data, MembershipIdResponse.class);
@@ -58,7 +59,7 @@ public class DestinyApiClient {
      */
     public AccountSummaryResponse getAccountSummary(String membershipId, boolean withDefinitions) throws DestinyApiClientException {
         try {
-            String url = this.formUrl("/" + this._membershipType + "/Account/" + membershipId + "/Summary" + "?definitions=" + withDefinitions);
+            String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Summary" + "?definitions=" + withDefinitions);
             String data = this.Request.getUrl(url);
 
             AccountSummaryResponse response = this._mapper.readValue(data, AccountSummaryResponse.class);
@@ -107,7 +108,7 @@ public class DestinyApiClient {
      */
     public CharacterProgressionResponse getCharacterProgression(String membershipId, String characterId, boolean withDefinitions) throws DestinyApiClientException {
         try {
-            String url = this.formUrl("/" + this._membershipType + "/Account/" + membershipId + "/Character/" + characterId + "/Progression" + "?definitions=" + withDefinitions);
+            String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Character/" + characterId + "/Progression" + "?definitions=" + withDefinitions);
             String data = this.Request.getUrl(url);
 
             CharacterProgressionResponse response = this._mapper.readValue(data, CharacterProgressionResponse.class);
@@ -139,7 +140,7 @@ public class DestinyApiClient {
      */
     public CharacterActivitiesResponse getCharacterActivities(String membershipId, String characterId, boolean withDefinitions) throws DestinyApiClientException {
         try {
-            String url = this.formUrl("/" + this._membershipType + "/Account/" + membershipId + "/Character/" + characterId + "/Activities" + "?definitions=" + withDefinitions);
+            String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Character/" + characterId + "/Activities" + "?definitions=" + withDefinitions);
             String data = this.Request.getUrl(url);
 
             CharacterActivitiesResponse response = this._mapper.readValue(data, CharacterActivitiesResponse.class);
@@ -171,7 +172,7 @@ public class DestinyApiClient {
      */
     public CharacterInventoryResponse getCharacterInventorySummary(String membershipId, String characterId, boolean withDefinitions) throws DestinyApiClientException {
         try {
-            String url = this.formUrl("/" + this._membershipType + "/Account/" + membershipId + "/Character/" + characterId + "/Inventory/Summary" + "?definitions=" + withDefinitions);
+            String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Character/" + characterId + "/Inventory/Summary" + "?definitions=" + withDefinitions);
             String data = this.Request.getUrl(url);
 
             CharacterInventoryResponse response = this._mapper.readValue(data, CharacterInventoryResponse.class);
@@ -211,7 +212,7 @@ public class DestinyApiClient {
                     "&count=" + count +
                     "&mode=" + (mode == null ? "None" : mode);
 
-            String url = this.formUrl("/Stats/ActivityHistory/" + this._membershipType + "/" + membershipId + "/" + characterId + "/?" + query);
+            String url = this.formUrl("/Stats/ActivityHistory/" + this._membershipType.getValue() + "/" + membershipId + "/" + characterId + "/?" + query);
             String data = this.Request.getUrl(url);
 
             ActivityHistoryStatsResponse response = this._mapper.readValue(data, ActivityHistoryStatsResponse.class);
@@ -259,7 +260,7 @@ public class DestinyApiClient {
      */
     public AggregateActivityStatsResponse getAggregateActivityStats(String membershipId, String characterId, boolean withDefinitions) throws DestinyApiClientException {
         try {
-            String url = this.formUrl("/Stats/AggregateActivityStats/" + this._membershipType + "/" + membershipId + "/" + characterId + "?definitions=" + withDefinitions);
+            String url = this.formUrl("/Stats/AggregateActivityStats/" + this._membershipType.getValue() + "/" + membershipId + "/" + characterId + "?definitions=" + withDefinitions);
             String data = this.Request.getUrl(url);
 
             AggregateActivityStatsResponse response = this._mapper.readValue(data, AggregateActivityStatsResponse.class);
@@ -290,7 +291,7 @@ public class DestinyApiClient {
      */
     public AccountItemsResponse getAccountItems(String membershipId, boolean withDefinitions) throws DestinyApiClientException {
         try {
-            String url = this.formUrl("/" + this._membershipType + "/Account/" + membershipId + "/Items" + "?definitions=" + withDefinitions);
+            String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Items" + "?definitions=" + withDefinitions);
             String data = this.Request.getUrl(url);
 
             AccountItemsResponse response = this._mapper.readValue(data, AccountItemsResponse.class);

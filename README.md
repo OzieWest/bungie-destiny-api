@@ -4,8 +4,8 @@ http://www.bungie.net/Platform/Destiny/help
 ### Usage
 
 ```java
-int membershipType = 2; // 1 - xbox, 2 - ps
-DestinyApiClient destinyApiClient = new DestinyApiClient(request, membershipType);
+MembershipType type = MembershipType.PLAYSTATION;
+DestinyApiClient destinyApiClient = new DestinyApiClient(request, type);
 
 // Returns a list of Destiny memberships given a full Gamertag or PSN ID
 destinyApiClient.getMembershipId(userName);

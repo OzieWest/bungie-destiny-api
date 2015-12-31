@@ -1,5 +1,6 @@
 package com.soramusoka.destinyApiClient;
 
+import com.soramusoka.destinyApiClient.dto_layer.MembershipType;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummary;
 import com.soramusoka.destinyApiClient.dto_layer.membership_id.MembershipId;
 import com.soramusoka.destinyApiClient.repository_layer.DestinyApiClient;
@@ -22,8 +23,10 @@ public class Main {
         String apiKey = cmd.getOptionValue("apikey");
         String userName = cmd.getOptionValue("username");
 
+        // TESTS
+        MembershipType type = MembershipType.PLAYSTATION;
         Request request = new Request(apiKey);
-        DestinyApiClient destinyApiClient = new DestinyApiClient(request, 2);
+        DestinyApiClient destinyApiClient = new DestinyApiClient(request, type);
 
         destinyApiClient.getAccountSummary("4611686018428868193", true);
         Thread.sleep(100);
