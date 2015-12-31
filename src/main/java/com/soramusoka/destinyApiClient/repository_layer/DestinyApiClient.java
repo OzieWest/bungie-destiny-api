@@ -8,7 +8,6 @@ import com.soramusoka.destinyApiClient.dto_layer.character_activities.CharacterA
 import com.soramusoka.destinyApiClient.dto_layer.character_inventory.CharacterInventoryResponse;
 import com.soramusoka.destinyApiClient.dto_layer.character_progression.CharacterProgressionResponse;
 import com.soramusoka.destinyApiClient.dto_layer.custom_errors.DestinyApiClientException;
-import com.soramusoka.destinyApiClient.dto_layer.membership_id.MembershipId;
 import com.soramusoka.destinyApiClient.dto_layer.membership_id.MembershipIdResponse;
 import com.soramusoka.destinyApiClient.dto_layer.stats_definition.StatsDefinitionResponse;
 import com.soramusoka.destinyApiClient.service_layer.IRequest;
@@ -33,15 +32,18 @@ public class DestinyApiClient {
 
     /**
      * Returns a list of Destiny memberships given a full Gamertag or PSN ID.
+     * @param userName
+     * @return MembershipIdResponse
+     * @throws DestinyApiClientException
      */
-    public MembershipId[] getMembershipId(String userName) throws DestinyApiClientException {
+    public MembershipIdResponse getMembershipId(String userName) throws DestinyApiClientException {
         try {
             String url = this.formUrl("/SearchDestinyPlayer/" + this._membershipType + "/" + userName);
             String data = this.Request.getUrl(url);
 
             MembershipIdResponse response = this._mapper.readValue(data, MembershipIdResponse.class);
             if (response.ErrorCode != 1) throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
-            return response.Response;
+            return response;
         } catch (Exception e) {
             throw new DestinyApiClientException(e);
         }
@@ -49,6 +51,10 @@ public class DestinyApiClient {
 
     /**
      * Returns Destiny account information for the supplied membership in a compact summary form.
+     * @param membershipId
+     * @param withDefinitions
+     * @return AccountSummaryResponse
+     * @throws DestinyApiClientException
      */
     public AccountSummaryResponse getAccountSummary(String membershipId, boolean withDefinitions) throws DestinyApiClientException {
         try {
@@ -65,6 +71,9 @@ public class DestinyApiClient {
 
     /**
      * Returns Destiny account information for the supplied membership in a compact summary form.
+     * @param membershipId
+     * @return AccountSummaryResponse
+     * @throws DestinyApiClientException
      */
     public AccountSummaryResponse getAccountSummary(String membershipId) throws DestinyApiClientException {
         return this.getAccountSummary(membershipId, false);
@@ -72,6 +81,8 @@ public class DestinyApiClient {
 
     /**
      * Gets historical stats definitions.
+     * @return StatsDefinitionResponse
+     * @throws DestinyApiClientException
      */
     public StatsDefinitionResponse getStatsDefinition() throws DestinyApiClientException {
         try {
@@ -88,6 +99,11 @@ public class DestinyApiClient {
 
     /**
      * Provides the progression details for the supplied character.
+     * @param membershipId
+     * @param characterId
+     * @param withDefinitions
+     * @return CharacterProgressionResponse
+     * @throws DestinyApiClientException
      */
     public CharacterProgressionResponse getCharacterProgression(String membershipId, String characterId, boolean withDefinitions) throws DestinyApiClientException {
         try {
@@ -104,6 +120,10 @@ public class DestinyApiClient {
 
     /**
      * Provides the progression details for the supplied character.
+     * @param membershipId
+     * @param characterId
+     * @return CharacterProgressionResponse
+     * @throws DestinyApiClientException
      */
     public CharacterProgressionResponse getCharacterProgression(String membershipId, String characterId) throws DestinyApiClientException {
         return this.getCharacterProgression(membershipId, characterId, false);
@@ -111,6 +131,11 @@ public class DestinyApiClient {
 
     /**
      * Retrieve the inventory for the supplied character.
+     * @param membershipId
+     * @param characterId
+     * @param withDefinitions
+     * @return CharacterActivitiesResponse
+     * @throws DestinyApiClientException
      */
     public CharacterActivitiesResponse getCharacterActivities(String membershipId, String characterId, boolean withDefinitions) throws DestinyApiClientException {
         try {
@@ -127,6 +152,10 @@ public class DestinyApiClient {
 
     /**
      * Retrieve the inventory for the supplied character.
+     * @param membershipId
+     * @param characterId
+     * @return CharacterActivitiesResponse
+     * @throws DestinyApiClientException
      */
     public CharacterActivitiesResponse getCharacterActivities(String membershipId, String characterId) throws DestinyApiClientException {
         return this.getCharacterActivities(membershipId, characterId, false);
@@ -134,6 +163,11 @@ public class DestinyApiClient {
 
     /**
      * Returns summary information for the inventory for the supplied character.
+     * @param membershipId
+     * @param characterId
+     * @param withDefinitions
+     * @return CharacterInventoryResponse
+     * @throws DestinyApiClientException
      */
     public CharacterInventoryResponse getCharacterInventorySummary(String membershipId, String characterId, boolean withDefinitions) throws DestinyApiClientException {
         try {
@@ -150,6 +184,10 @@ public class DestinyApiClient {
 
     /**
      * Returns summary information for the inventory for the supplied character.
+     * @param membershipId
+     * @param characterId
+     * @return CharacterInventoryResponse
+     * @throws DestinyApiClientException
      */
     public CharacterInventoryResponse getCharacterInventorySummary(String membershipId, String characterId) throws DestinyApiClientException {
         return this.getCharacterInventorySummary(membershipId, characterId, false);
@@ -157,6 +195,14 @@ public class DestinyApiClient {
 
     /**
      * Gets activity history stats for indicated character.
+     * @param membershipId
+     * @param characterId
+     * @param count
+     * @param page
+     * @param mode
+     * @param withDefinitions
+     * @return ActivityHistoryStatsResponse
+     * @throws DestinyApiClientException
      */
     public ActivityHistoryStatsResponse getActivityHistoryStats(String membershipId, String characterId, int count, int page, String mode, boolean withDefinitions) throws DestinyApiClientException {
         try {
@@ -178,6 +224,13 @@ public class DestinyApiClient {
 
     /**
      * Gets activity history stats for indicated character.
+     * @param membershipId
+     * @param characterId
+     * @param count
+     * @param page
+     * @param mode
+     * @return ActivityHistoryStatsResponse
+     * @throws DestinyApiClientException
      */
     public ActivityHistoryStatsResponse getActivityHistoryStats(String membershipId, String characterId, int count, int page, String mode) throws DestinyApiClientException {
         return this.getActivityHistoryStats(membershipId, characterId, count, page, mode, false);
@@ -185,6 +238,12 @@ public class DestinyApiClient {
 
     /**
      * Gets activity history stats for indicated character.
+     * @param membershipId
+     * @param characterId
+     * @param count
+     * @param page
+     * @return ActivityHistoryStatsResponse
+     * @throws DestinyApiClientException
      */
     public ActivityHistoryStatsResponse getActivityHistoryStats(String membershipId, String characterId, int count, int page) throws DestinyApiClientException {
         return this.getActivityHistoryStats(membershipId, characterId, count, page, "None", false);
@@ -192,6 +251,11 @@ public class DestinyApiClient {
 
     /**
      * Gets all activities the character has participated in together with aggregate statistics for those activities.
+     * @param membershipId
+     * @param characterId
+     * @param withDefinitions
+     * @return AggregateActivityStatsResponse
+     * @throws DestinyApiClientException
      */
     public AggregateActivityStatsResponse getAggregateActivityStats(String membershipId, String characterId, boolean withDefinitions) throws DestinyApiClientException {
         try {
@@ -208,6 +272,10 @@ public class DestinyApiClient {
 
     /**
      * Gets all activities the character has participated in together with aggregate statistics for those activities.
+     * @param membershipId
+     * @param characterId
+     * @return AggregateActivityStatsResponse
+     * @throws DestinyApiClientException
      */
     public AggregateActivityStatsResponse getAggregateActivityStats(String membershipId, String characterId) throws DestinyApiClientException {
         return this.getAggregateActivityStats(membershipId, characterId, false);
@@ -215,6 +283,10 @@ public class DestinyApiClient {
 
     /**
      * Returns information about all items on the for the supplied Destiny Membership ID, and a minimal set of character information so that it can be used.
+     * @param membershipId
+     * @param withDefinitions
+     * @return AccountItemsResponse
+     * @throws DestinyApiClientException
      */
     public AccountItemsResponse getAccountItems(String membershipId, boolean withDefinitions) throws DestinyApiClientException {
         try {
@@ -231,6 +303,9 @@ public class DestinyApiClient {
 
     /**
      * Returns information about all items on the for the supplied Destiny Membership ID, and a minimal set of character information so that it can be used.
+     * @param membershipId
+     * @return AccountItemsResponse
+     * @throws DestinyApiClientException
      */
     public AccountItemsResponse getAccountItems(String membershipId) throws DestinyApiClientException {
         return this.getAccountItems(membershipId, false);
