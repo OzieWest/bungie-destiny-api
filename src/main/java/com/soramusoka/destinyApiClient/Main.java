@@ -1,5 +1,6 @@
 package com.soramusoka.destinyApiClient;
 
+import com.soramusoka.destinyApiClient.dto_layer.ActivityType;
 import com.soramusoka.destinyApiClient.dto_layer.MembershipType;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummary;
 import com.soramusoka.destinyApiClient.dto_layer.membership_id.MembershipId;
@@ -36,7 +37,7 @@ public class Main {
         Thread.sleep(100);
         destinyApiClient.getCharacterInventorySummary("4611686018428868193", "2305843009345925219", true);
         Thread.sleep(100);
-        destinyApiClient.getActivityHistoryStats("4611686018428868193", "2305843009345925219", 100, 0, "Story",  true);
+        destinyApiClient.getActivityHistoryStats("4611686018428868193", "2305843009345925219", 100, 0, ActivityType.Story,  true);
         Thread.sleep(100);
         destinyApiClient.getAggregateActivityStats("4611686018428868193", "2305843009345925219", true);
         Thread.sleep(100);

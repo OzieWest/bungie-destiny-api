@@ -1,5 +1,6 @@
 package com.soramusoka.destinyApiClient.repository_layer;
 
+import com.soramusoka.destinyApiClient.dto_layer.ActivityType;
 import com.soramusoka.destinyApiClient.dto_layer.MembershipType;
 import com.soramusoka.destinyApiClient.dto_layer.account_items.AccountItemsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummaryResponse;
@@ -205,12 +206,12 @@ public class DestinyApiClient {
      * @return ActivityHistoryStatsResponse
      * @throws DestinyApiClientException
      */
-    public ActivityHistoryStatsResponse getActivityHistoryStats(String membershipId, String characterId, int count, int page, String mode, boolean withDefinitions) throws DestinyApiClientException {
+    public ActivityHistoryStatsResponse getActivityHistoryStats(String membershipId, String characterId, int count, int page, ActivityType mode, boolean withDefinitions) throws DestinyApiClientException {
         try {
             String query = "definitions=" + withDefinitions +
                     "&page=" + page +
                     "&count=" + count +
-                    "&mode=" + (mode == null ? "None" : mode);
+                    "&mode=" + (mode == null ? ActivityType.None.getValue() : mode.getValue());
 
             String url = this.formUrl("/Stats/ActivityHistory/" + this._membershipType.getValue() + "/" + membershipId + "/" + characterId + "/?" + query);
             String data = this.Request.getUrl(url);
@@ -233,7 +234,7 @@ public class DestinyApiClient {
      * @return ActivityHistoryStatsResponse
      * @throws DestinyApiClientException
      */
-    public ActivityHistoryStatsResponse getActivityHistoryStats(String membershipId, String characterId, int count, int page, String mode) throws DestinyApiClientException {
+    public ActivityHistoryStatsResponse getActivityHistoryStats(String membershipId, String characterId, int count, int page, ActivityType mode) throws DestinyApiClientException {
         return this.getActivityHistoryStats(membershipId, characterId, count, page, mode, false);
     }
 
@@ -247,7 +248,7 @@ public class DestinyApiClient {
      * @throws DestinyApiClientException
      */
     public ActivityHistoryStatsResponse getActivityHistoryStats(String membershipId, String characterId, int count, int page) throws DestinyApiClientException {
-        return this.getActivityHistoryStats(membershipId, characterId, count, page, "None", false);
+        return this.getActivityHistoryStats(membershipId, characterId, count, page, ActivityType.None, false);
     }
 
     /**
