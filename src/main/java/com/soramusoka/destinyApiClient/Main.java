@@ -25,12 +25,20 @@ public class Main {
         Request request = new Request(apiKey);
         DestinyApiClient destinyApiClient = new DestinyApiClient(request, 2);
 
-        // destinyApiClient.getAccountSummary("4611686018428868193", true);
-        // destinyApiClient.getCharacterProgression("4611686018428868193", "2305843009345925219", true);
-        // destinyApiClient.getCharacterActivities("4611686018428868193", "2305843009345925219", true);
-        // destinyApiClient.getCharacterInventorySummary("4611686018428868193", "2305843009345925219", true);
-        // destinyApiClient.getActivityHistoryStats("4611686018428868193", "2305843009345925219", 100, 0, "Story",  true);
+        destinyApiClient.getAccountSummary("4611686018428868193", true);
+        Thread.sleep(100);
+        destinyApiClient.getCharacterProgression("4611686018428868193", "2305843009345925219", true);
+        Thread.sleep(100);
+        destinyApiClient.getCharacterActivities("4611686018428868193", "2305843009345925219", true);
+        Thread.sleep(100);
+        destinyApiClient.getCharacterInventorySummary("4611686018428868193", "2305843009345925219", true);
+        Thread.sleep(100);
+        destinyApiClient.getActivityHistoryStats("4611686018428868193", "2305843009345925219", 100, 0, "Story",  true);
+        Thread.sleep(100);
         destinyApiClient.getAggregateActivityStats("4611686018428868193", "2305843009345925219", true);
+        Thread.sleep(100);
+        destinyApiClient.getAccountItems("4611686018428868193", true);
+        System.out.println("Done");
     }
 
     public static CommandLine getConfig(String[] args) throws Exception {
