@@ -1,6 +1,6 @@
 package com.soramusoka.destinyApiClient.dto_layer.stats_definition;
 
-public class StatsDefinition {
+public class StatDefinition {
     public String statId;
     public int group;
     public int[] periodTypes;

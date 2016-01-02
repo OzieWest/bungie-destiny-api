@@ -2,6 +2,7 @@ package com.soramusoka.destinyApiClient;
 
 import com.soramusoka.destinyApiClient.dto_layer.ActivityType;
 import com.soramusoka.destinyApiClient.dto_layer.MembershipType;
+import com.soramusoka.destinyApiClient.dto_layer.StatGroupType;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummary;
 import com.soramusoka.destinyApiClient.dto_layer.membership_id.MembershipId;
 import com.soramusoka.destinyApiClient.repository_layer.DestinyApiClient;
@@ -13,6 +14,7 @@ import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class Main {
@@ -42,6 +44,16 @@ public class Main {
         destinyApiClient.getAggregateActivityStats("4611686018428868193", "2305843009345925219", true);
         Thread.sleep(100);
         destinyApiClient.getAccountItems("4611686018428868193", true);
+        Thread.sleep(100);
+        ArrayList<StatGroupType> types = new ArrayList<>();
+        types.add(StatGroupType.Medals);
+        types.add(StatGroupType.Enemies);
+        types.add(StatGroupType.General);
+        types.add(StatGroupType.Values);
+        types.add(StatGroupType.Weapons);
+        destinyApiClient.getAccountStats("4611686018428868193", types);
+        Thread.sleep(100);
+        destinyApiClient.getAccountStats("4611686018428868193", StatGroupType.Enemies);
         System.out.println("Done");
     }
 

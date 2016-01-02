@@ -2,7 +2,9 @@ package com.soramusoka.destinyApiClient.repository_layer;
 
 import com.soramusoka.destinyApiClient.dto_layer.ActivityType;
 import com.soramusoka.destinyApiClient.dto_layer.MembershipType;
+import com.soramusoka.destinyApiClient.dto_layer.StatGroupType;
 import com.soramusoka.destinyApiClient.dto_layer.account_items.AccountItemsResponse;
+import com.soramusoka.destinyApiClient.dto_layer.account_stats.AccountStatsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummaryResponse;
 import com.soramusoka.destinyApiClient.dto_layer.activity_history_stats.ActivityHistoryStatsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.aggregate_activity_stats.AggregateActivityStatsResponse;
@@ -14,6 +16,8 @@ import com.soramusoka.destinyApiClient.dto_layer.membership_id.MembershipIdRespo
 import com.soramusoka.destinyApiClient.dto_layer.stats_definition.StatsDefinitionResponse;
 import com.soramusoka.destinyApiClient.service_layer.IRequest;
 import org.codehaus.jackson.map.ObjectMapper;
+
+import java.util.ArrayList;
 
 public class DestinyApiClient {
     public IRequest Request;
@@ -34,6 +38,7 @@ public class DestinyApiClient {
 
     /**
      * Returns a list of Destiny memberships given a full Gamertag or PSN ID.
+     *
      * @param userName
      * @return MembershipIdResponse
      * @throws DestinyApiClientException
@@ -44,7 +49,8 @@ public class DestinyApiClient {
             String data = this.Request.getUrl(url);
 
             MembershipIdResponse response = this._mapper.readValue(data, MembershipIdResponse.class);
-            if (response.ErrorCode != 1) throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            if (response.ErrorCode != 1)
+                throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
             throw new DestinyApiClientException(e);
@@ -53,6 +59,7 @@ public class DestinyApiClient {
 
     /**
      * Returns Destiny account information for the supplied membership in a compact summary form.
+     *
      * @param membershipId
      * @param withDefinitions
      * @return AccountSummaryResponse
@@ -64,7 +71,8 @@ public class DestinyApiClient {
             String data = this.Request.getUrl(url);
 
             AccountSummaryResponse response = this._mapper.readValue(data, AccountSummaryResponse.class);
-            if (response.ErrorCode != 1) throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            if (response.ErrorCode != 1)
+                throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
             throw new DestinyApiClientException(e);
@@ -73,6 +81,7 @@ public class DestinyApiClient {
 
     /**
      * Returns Destiny account information for the supplied membership in a compact summary form.
+     *
      * @param membershipId
      * @return AccountSummaryResponse
      * @throws DestinyApiClientException
@@ -83,6 +92,7 @@ public class DestinyApiClient {
 
     /**
      * Gets historical stats definitions.
+     *
      * @return StatsDefinitionResponse
      * @throws DestinyApiClientException
      */
@@ -92,7 +102,8 @@ public class DestinyApiClient {
             String data = this.Request.getUrl(url);
 
             StatsDefinitionResponse response = this._mapper.readValue(data, StatsDefinitionResponse.class);
-            if (response.ErrorCode != 1) throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            if (response.ErrorCode != 1)
+                throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
             throw new DestinyApiClientException(e);
@@ -101,6 +112,7 @@ public class DestinyApiClient {
 
     /**
      * Provides the progression details for the supplied character.
+     *
      * @param membershipId
      * @param characterId
      * @param withDefinitions
@@ -113,7 +125,8 @@ public class DestinyApiClient {
             String data = this.Request.getUrl(url);
 
             CharacterProgressionResponse response = this._mapper.readValue(data, CharacterProgressionResponse.class);
-            if (response.ErrorCode != 1) throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            if (response.ErrorCode != 1)
+                throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
             throw new DestinyApiClientException(e);
@@ -122,6 +135,7 @@ public class DestinyApiClient {
 
     /**
      * Provides the progression details for the supplied character.
+     *
      * @param membershipId
      * @param characterId
      * @return CharacterProgressionResponse
@@ -133,6 +147,7 @@ public class DestinyApiClient {
 
     /**
      * Retrieve the inventory for the supplied character.
+     *
      * @param membershipId
      * @param characterId
      * @param withDefinitions
@@ -145,7 +160,8 @@ public class DestinyApiClient {
             String data = this.Request.getUrl(url);
 
             CharacterActivitiesResponse response = this._mapper.readValue(data, CharacterActivitiesResponse.class);
-            if (response.ErrorCode != 1) throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            if (response.ErrorCode != 1)
+                throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
             throw new DestinyApiClientException(e);
@@ -154,6 +170,7 @@ public class DestinyApiClient {
 
     /**
      * Retrieve the inventory for the supplied character.
+     *
      * @param membershipId
      * @param characterId
      * @return CharacterActivitiesResponse
@@ -165,6 +182,7 @@ public class DestinyApiClient {
 
     /**
      * Returns summary information for the inventory for the supplied character.
+     *
      * @param membershipId
      * @param characterId
      * @param withDefinitions
@@ -177,7 +195,8 @@ public class DestinyApiClient {
             String data = this.Request.getUrl(url);
 
             CharacterInventoryResponse response = this._mapper.readValue(data, CharacterInventoryResponse.class);
-            if (response.ErrorCode != 1) throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            if (response.ErrorCode != 1)
+                throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
             throw new DestinyApiClientException(e);
@@ -186,6 +205,7 @@ public class DestinyApiClient {
 
     /**
      * Returns summary information for the inventory for the supplied character.
+     *
      * @param membershipId
      * @param characterId
      * @return CharacterInventoryResponse
@@ -197,6 +217,7 @@ public class DestinyApiClient {
 
     /**
      * Gets activity history stats for indicated character.
+     *
      * @param membershipId
      * @param characterId
      * @param count
@@ -217,7 +238,8 @@ public class DestinyApiClient {
             String data = this.Request.getUrl(url);
 
             ActivityHistoryStatsResponse response = this._mapper.readValue(data, ActivityHistoryStatsResponse.class);
-            if (response.ErrorCode != 1) throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            if (response.ErrorCode != 1)
+                throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
             throw new DestinyApiClientException(e);
@@ -226,6 +248,7 @@ public class DestinyApiClient {
 
     /**
      * Gets activity history stats for indicated character.
+     *
      * @param membershipId
      * @param characterId
      * @param count
@@ -240,6 +263,7 @@ public class DestinyApiClient {
 
     /**
      * Gets activity history stats for indicated character.
+     *
      * @param membershipId
      * @param characterId
      * @param count
@@ -253,6 +277,7 @@ public class DestinyApiClient {
 
     /**
      * Gets all activities the character has participated in together with aggregate statistics for those activities.
+     *
      * @param membershipId
      * @param characterId
      * @param withDefinitions
@@ -265,7 +290,8 @@ public class DestinyApiClient {
             String data = this.Request.getUrl(url);
 
             AggregateActivityStatsResponse response = this._mapper.readValue(data, AggregateActivityStatsResponse.class);
-            if (response.ErrorCode != 1) throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            if (response.ErrorCode != 1)
+                throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
             throw new DestinyApiClientException(e);
@@ -274,6 +300,7 @@ public class DestinyApiClient {
 
     /**
      * Gets all activities the character has participated in together with aggregate statistics for those activities.
+     *
      * @param membershipId
      * @param characterId
      * @return AggregateActivityStatsResponse
@@ -285,6 +312,7 @@ public class DestinyApiClient {
 
     /**
      * Returns information about all items on the for the supplied Destiny Membership ID, and a minimal set of character information so that it can be used.
+     *
      * @param membershipId
      * @param withDefinitions
      * @return AccountItemsResponse
@@ -296,7 +324,8 @@ public class DestinyApiClient {
             String data = this.Request.getUrl(url);
 
             AccountItemsResponse response = this._mapper.readValue(data, AccountItemsResponse.class);
-            if (response.ErrorCode != 1) throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            if (response.ErrorCode != 1)
+                throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
             throw new DestinyApiClientException(e);
@@ -305,11 +334,50 @@ public class DestinyApiClient {
 
     /**
      * Returns information about all items on the for the supplied Destiny Membership ID, and a minimal set of character information so that it can be used.
+     *
      * @param membershipId
      * @return AccountItemsResponse
      * @throws DestinyApiClientException
      */
     public AccountItemsResponse getAccountItems(String membershipId) throws DestinyApiClientException {
         return this.getAccountItems(membershipId, false);
+    }
+
+    /**
+     * Gets aggregate historical stats organized around each character for a given account.
+     * @param membershipId
+     * @param groups
+     * @return AccountStatsResponse
+     * @throws DestinyApiClientException
+     */
+    public AccountStatsResponse getAccountStats(String membershipId, ArrayList<StatGroupType> groups) throws DestinyApiClientException {
+        try {
+            String query = "?groups=";
+            for (StatGroupType group : groups) {
+                query += group + ",";
+            }
+            String url = this.formUrl("/Stats/Account/" + this._membershipType.getValue() + "/" + membershipId + query);
+            String data = this.Request.getUrl(url);
+
+            AccountStatsResponse response = this._mapper.readValue(data, AccountStatsResponse.class);
+            if (response.ErrorCode != 1)
+                throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            return response;
+        } catch (Exception e) {
+            throw new DestinyApiClientException(e);
+        }
+    }
+
+    /**
+     * Gets aggregate historical stats organized around each character for a given account.
+     * @param membershipId
+     * @param groups
+     * @return AccountStatsResponse
+     * @throws DestinyApiClientException
+     */
+    public AccountStatsResponse getAccountStats(String membershipId, StatGroupType groups) throws DestinyApiClientException {
+        ArrayList<StatGroupType> types = new ArrayList<>();
+        types.add(groups);
+        return this.getAccountStats(membershipId, types);
     }
 }
