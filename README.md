@@ -31,5 +31,14 @@ destinyApiClient.getActivityHistoryStats(membershipId, characterId, count, page,
 // Gets all activities the character has participated in together with aggregate statistics for those activities.
 destinyApiClient.getAggregateActivityStats(membershipId, characterId, withDefinitions);
 
+// Returns information about all items on the for the supplied Destiny Membership ID, and a minimal set of character information so that it can be used.
+destinyApiClient.getAccountItems(membershipId, withDefinitions);
+
+// Gets aggregate historical stats organized around each character for a given account.
+destinyApiClient.getAccountStats(membershipId, groups);
+
+// Gets details about unique weapon usage, including all exotic weapons.
+destinyApiClient.getUniqueWeaponsStats(membershipId, characterId, withDefinitions);
+
 // others in progress...
 ```
