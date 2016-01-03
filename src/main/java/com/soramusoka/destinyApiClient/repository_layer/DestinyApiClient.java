@@ -14,6 +14,7 @@ import com.soramusoka.destinyApiClient.dto_layer.character_progression.Character
 import com.soramusoka.destinyApiClient.dto_layer.custom_errors.DestinyApiClientException;
 import com.soramusoka.destinyApiClient.dto_layer.membership_id.MembershipIdResponse;
 import com.soramusoka.destinyApiClient.dto_layer.stats_definition.StatsDefinitionResponse;
+import com.soramusoka.destinyApiClient.dto_layer.unique_weapons_stats.UniqueWeaponsStatsResponse;
 import com.soramusoka.destinyApiClient.service_layer.IRequest;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -345,6 +346,7 @@ public class DestinyApiClient {
 
     /**
      * Gets aggregate historical stats organized around each character for a given account.
+     *
      * @param membershipId
      * @param groups
      * @return AccountStatsResponse
@@ -370,6 +372,7 @@ public class DestinyApiClient {
 
     /**
      * Gets aggregate historical stats organized around each character for a given account.
+     *
      * @param membershipId
      * @param groups
      * @return AccountStatsResponse
@@ -379,5 +382,40 @@ public class DestinyApiClient {
         ArrayList<StatGroupType> types = new ArrayList<>();
         types.add(groups);
         return this.getAccountStats(membershipId, types);
+    }
+
+    /**
+     * Gets details about unique weapon usage, including all exotic weapons.
+     *
+     * @param membershipId
+     * @param characterId
+     * @param withDefinitions
+     * @return UniqueWeaponsStatsResponse
+     * @throws DestinyApiClientException
+     */
+    public UniqueWeaponsStatsResponse getUniqueWeaponsStats(String membershipId, String characterId, boolean withDefinitions) throws DestinyApiClientException {
+        try {
+            String url = this.formUrl("/Stats/UniqueWeapons/" + this._membershipType.getValue() + "/" + membershipId + "/" + characterId + "?definitions=" + withDefinitions);
+            String data = this.Request.getUrl(url);
+
+            UniqueWeaponsStatsResponse response = this._mapper.readValue(data, UniqueWeaponsStatsResponse.class);
+            if (response.ErrorCode != 1)
+                throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            return response;
+        } catch (Exception e) {
+            throw new DestinyApiClientException(e);
+        }
+    }
+
+    /**
+     * Gets details about unique weapon usage, including all exotic weapons.
+     *
+     * @param membershipId
+     * @param characterId
+     * @return UniqueWeaponsStatsResponse
+     * @throws DestinyApiClientException
+     */
+    public UniqueWeaponsStatsResponse getUniqueWeaponsStats(String membershipId, String characterId) throws DestinyApiClientException {
+        return this.getUniqueWeaponsStats(membershipId, characterId, false);
     }
 }

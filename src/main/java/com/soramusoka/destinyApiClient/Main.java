@@ -54,6 +54,8 @@ public class Main {
         destinyApiClient.getAccountStats("4611686018428868193", types);
         Thread.sleep(100);
         destinyApiClient.getAccountStats("4611686018428868193", StatGroupType.Enemies);
+        Thread.sleep(100);
+        destinyApiClient.getUniqueWeaponsStats("4611686018428868193", "2305843009345925219", true);
         System.out.println("Done");
     }
 
