@@ -6,6 +6,7 @@ import com.soramusoka.destinyApiClient.dto_layer.StatGroupType;
 import com.soramusoka.destinyApiClient.dto_layer.account_items.AccountItemsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.account_stats.AccountStatsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummaryResponse;
+import com.soramusoka.destinyApiClient.dto_layer.account_triumphs.AccountTriumphsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.activity_history_stats.ActivityHistoryStatsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.aggregate_activity_stats.AggregateActivityStatsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.character_activities.CharacterActivitiesResponse;
@@ -417,5 +418,39 @@ public class DestinyApiClient {
      */
     public UniqueWeaponsStatsResponse getUniqueWeaponsStats(String membershipId, String characterId) throws DestinyApiClientException {
         return this.getUniqueWeaponsStats(membershipId, characterId, false);
+    }
+
+    /**
+     * Provides Triumphs for a given Destiny account.
+     *
+     * @param membershipId
+     * @param withDefinitions
+     * @return AccountTriumphsResponse
+     * @throws DestinyApiClientException
+     */
+    public AccountTriumphsResponse getAccountTriumphs(String membershipId, boolean withDefinitions) throws DestinyApiClientException {
+        try {
+            String query = "?definitions=" + withDefinitions;
+            String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Triumphs" + query);
+            String data = this.Request.getUrl(url);
+
+            AccountTriumphsResponse response = this._mapper.readValue(data, AccountTriumphsResponse.class);
+            if (response.ErrorCode != 1)
+                throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            return response;
+        } catch (Exception e) {
+            throw new DestinyApiClientException(e);
+        }
+    }
+
+    /**
+     * Provides Triumphs for a given Destiny account.
+     *
+     * @param membershipId
+     * @return AccountTriumphsResponse
+     * @throws DestinyApiClientException
+     */
+    public AccountTriumphsResponse getAccountTriumphs(String membershipId) throws DestinyApiClientException {
+        return this.getAccountTriumphs(membershipId, false);
     }
 }

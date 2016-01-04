@@ -40,5 +40,8 @@ destinyApiClient.getAccountStats(membershipId, groups);
 // Gets details about unique weapon usage, including all exotic weapons.
 destinyApiClient.getUniqueWeaponsStats(membershipId, characterId, withDefinitions);
 
+// Provides Triumphs for a given Destiny account.
+destinyApiClient.getAccountTriumphs(membershipId, withDefinitions);
+
 // others in progress...
 ```
