@@ -14,6 +14,7 @@ import com.soramusoka.destinyApiClient.dto_layer.character_inventory.CharacterIn
 import com.soramusoka.destinyApiClient.dto_layer.character_progression.CharacterProgressionResponse;
 import com.soramusoka.destinyApiClient.dto_layer.custom_errors.DestinyApiClientException;
 import com.soramusoka.destinyApiClient.dto_layer.membership_id.MembershipIdResponse;
+import com.soramusoka.destinyApiClient.dto_layer.post_game_carnage_report.PostGameCarnageReportResponse;
 import com.soramusoka.destinyApiClient.dto_layer.stats_definition.StatsDefinitionResponse;
 import com.soramusoka.destinyApiClient.dto_layer.unique_weapons_stats.UniqueWeaponsStatsResponse;
 import com.soramusoka.destinyApiClient.service_layer.IRequest;
@@ -452,5 +453,39 @@ public class DestinyApiClient {
      */
     public AccountTriumphsResponse getAccountTriumphs(String membershipId) throws DestinyApiClientException {
         return this.getAccountTriumphs(membershipId, false);
+    }
+
+    /**
+     * Gets the available post game carnage report for the activity ID.
+     *
+     * @param activityHashId
+     * @param withDefinitions
+     * @return PostGameCarnageReportResponse
+     * @throws DestinyApiClientException
+     */
+    public PostGameCarnageReportResponse getPostGameCarnageReport(String activityHashId, boolean withDefinitions) throws DestinyApiClientException {
+        try {
+            String query = "?definitions=" + withDefinitions;
+            String url = this.formUrl("/Stats/PostGameCarnageReport/" + activityHashId + query);
+            String data = this.Request.getUrl(url);
+
+            PostGameCarnageReportResponse response = this._mapper.readValue(data, PostGameCarnageReportResponse.class);
+            if (response.ErrorCode != 1)
+                throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            return response;
+        } catch (Exception e) {
+            throw new DestinyApiClientException(e);
+        }
+    }
+
+    /**
+     * Gets the available post game carnage report for the activity ID.
+     *
+     * @param activityHashId
+     * @return PostGameCarnageReportResponse
+     * @throws DestinyApiClientException
+     */
+    public PostGameCarnageReportResponse getPostGameCarnageReport(String activityHashId) throws DestinyApiClientException {
+        return this.getPostGameCarnageReport(activityHashId, false);
     }
 }
