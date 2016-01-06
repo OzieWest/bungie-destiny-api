@@ -8,7 +8,7 @@ MembershipType type = MembershipType.PLAYSTATION;
 DestinyApiClient destinyApiClient = new DestinyApiClient(request, type);
 
 // Returns a list of Destiny memberships given a full Gamertag or PSN ID
-destinyApiClient.getMembershipId(userName);
+destinyApiClient.getUserInfoByDisplayName(displayName);
 
 // Returns Destiny account information for the supplied membership in a compact summary form.
 destinyApiClient.getAccountSummary(membershipId, withDefinitions);
@@ -42,6 +42,12 @@ destinyApiClient.getUniqueWeaponsStats(membershipId, characterId, withDefinition
 
 // Provides Triumphs for a given Destiny account.
 destinyApiClient.getAccountTriumphs(membershipId, withDefinitions);
+
+// Gets the available post game carnage report for the activity ID.
+destinyApiClient.getPostGameCarnageReport(activityHashId, withDefinitions);
+
+// Returns the numerical id of a player based on their display name, zero if not found.
+destinyApiClient.getMembershipIdByDisplayName(displayName, ignorecase);
 
 // others in progress...
 ```

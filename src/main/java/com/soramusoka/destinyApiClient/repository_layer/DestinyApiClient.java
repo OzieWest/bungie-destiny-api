@@ -1,8 +1,8 @@
 package com.soramusoka.destinyApiClient.repository_layer;
 
-import com.soramusoka.destinyApiClient.dto_layer.ActivityType;
-import com.soramusoka.destinyApiClient.dto_layer.MembershipType;
-import com.soramusoka.destinyApiClient.dto_layer.StatGroupType;
+import com.soramusoka.destinyApiClient.dto_layer.common.ActivityType;
+import com.soramusoka.destinyApiClient.dto_layer.common.MembershipType;
+import com.soramusoka.destinyApiClient.dto_layer.common.StatGroupType;
 import com.soramusoka.destinyApiClient.dto_layer.account_items.AccountItemsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.account_stats.AccountStatsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummaryResponse;
@@ -12,8 +12,9 @@ import com.soramusoka.destinyApiClient.dto_layer.aggregate_activity_stats.Aggreg
 import com.soramusoka.destinyApiClient.dto_layer.character_activities.CharacterActivitiesResponse;
 import com.soramusoka.destinyApiClient.dto_layer.character_inventory.CharacterInventoryResponse;
 import com.soramusoka.destinyApiClient.dto_layer.character_progression.CharacterProgressionResponse;
-import com.soramusoka.destinyApiClient.dto_layer.custom_errors.DestinyApiClientException;
-import com.soramusoka.destinyApiClient.dto_layer.membership_id.MembershipIdResponse;
+import com.soramusoka.destinyApiClient.dto_layer.DestinyApiClientException;
+import com.soramusoka.destinyApiClient.dto_layer.user_info.UserInfoResponse;
+import com.soramusoka.destinyApiClient.dto_layer.membership_id_response.MembershipIdResponse;
 import com.soramusoka.destinyApiClient.dto_layer.post_game_carnage_report.PostGameCarnageReportResponse;
 import com.soramusoka.destinyApiClient.dto_layer.stats_definition.StatsDefinitionResponse;
 import com.soramusoka.destinyApiClient.dto_layer.unique_weapons_stats.UniqueWeaponsStatsResponse;
@@ -42,13 +43,36 @@ public class DestinyApiClient {
     /**
      * Returns a list of Destiny memberships given a full Gamertag or PSN ID.
      *
-     * @param userName
-     * @return MembershipIdResponse
+     * @param displayName
+     * @return UserInfoResponse
      * @throws DestinyApiClientException
      */
-    public MembershipIdResponse getMembershipId(String userName) throws DestinyApiClientException {
+    public UserInfoResponse getUserInfoByDisplayName(String displayName) throws DestinyApiClientException {
         try {
-            String url = this.formUrl("/SearchDestinyPlayer/" + this._membershipType.getValue() + "/" + userName);
+            String url = this.formUrl("/SearchDestinyPlayer/" + this._membershipType.getValue() + "/" + displayName);
+            String data = this.Request.getUrl(url);
+
+            UserInfoResponse response = this._mapper.readValue(data, UserInfoResponse.class);
+            if (response.ErrorCode != 1)
+                throw new DestinyApiClientException(response.ErrorStatus + ". " + response.Message);
+            return response;
+        } catch (Exception e) {
+            throw new DestinyApiClientException(e);
+        }
+    }
+
+    /**
+     * Returns the numerical id of a player based on their display name, zero if not found.
+     *
+     * @param displayName
+     * @param ignorecase
+     * @return
+     * @throws DestinyApiClientException
+     */
+    public MembershipIdResponse getMembershipIdByDisplayName(String displayName, boolean ignorecase) throws DestinyApiClientException {
+        try {
+            String query = "?ignorecase=" + ignorecase;
+            String url = this.formUrl("/" + this._membershipType.getValue() + "/Stats/GetMembershipIdByDisplayName/" + displayName + query);
             String data = this.Request.getUrl(url);
 
             MembershipIdResponse response = this._mapper.readValue(data, MembershipIdResponse.class);
@@ -58,6 +82,17 @@ public class DestinyApiClient {
         } catch (Exception e) {
             throw new DestinyApiClientException(e);
         }
+    }
+
+    /**
+     * Returns the numerical id of a player based on their display name, zero if not found.
+     *
+     * @param displayName
+     * @return
+     * @throws DestinyApiClientException
+     */
+    public MembershipIdResponse getMembershipIdByDisplayName(String displayName) throws DestinyApiClientException {
+        return this.getMembershipIdByDisplayName(displayName, false);
     }
 
     /**

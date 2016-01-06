@@ -1,4 +1,4 @@
-package com.soramusoka.destinyApiClient.dto_layer;
+package com.soramusoka.destinyApiClient.dto_layer.common;
 
 public enum ActivityType {
     None("None"),

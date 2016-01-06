@@ -1,4 +1,4 @@
-package com.soramusoka.destinyApiClient.dto_layer.custom_errors;
+package com.soramusoka.destinyApiClient.dto_layer;
 
 public class DestinyApiClientException extends Exception {
     public DestinyApiClientException() {

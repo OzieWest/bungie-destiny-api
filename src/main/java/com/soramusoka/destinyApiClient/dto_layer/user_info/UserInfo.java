@@ -1,6 +1,6 @@
-package com.soramusoka.destinyApiClient.dto_layer.post_game_carnage_report;
+package com.soramusoka.destinyApiClient.dto_layer.user_info;
 
-public class BungieUserInfo {
+public class UserInfo {
     public String iconPath;
     public int membershipType;
     public String membershipId;

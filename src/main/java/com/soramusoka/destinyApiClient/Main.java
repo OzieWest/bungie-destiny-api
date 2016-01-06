@@ -1,10 +1,8 @@
 package com.soramusoka.destinyApiClient;
 
-import com.soramusoka.destinyApiClient.dto_layer.ActivityType;
-import com.soramusoka.destinyApiClient.dto_layer.MembershipType;
-import com.soramusoka.destinyApiClient.dto_layer.StatGroupType;
-import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummary;
-import com.soramusoka.destinyApiClient.dto_layer.membership_id.MembershipId;
+import com.soramusoka.destinyApiClient.dto_layer.common.ActivityType;
+import com.soramusoka.destinyApiClient.dto_layer.common.MembershipType;
+import com.soramusoka.destinyApiClient.dto_layer.common.StatGroupType;
 import com.soramusoka.destinyApiClient.repository_layer.DestinyApiClient;
 import com.soramusoka.destinyApiClient.service_layer.Request;
 import org.apache.commons.cli.CommandLine;
@@ -31,6 +29,8 @@ public class Main {
         Request request = new Request(apiKey);
         DestinyApiClient destinyApiClient = new DestinyApiClient(request, type);
 
+        destinyApiClient.getUserInfoByDisplayName("soramusoka");
+        Thread.sleep(100);
         destinyApiClient.getAccountSummary("4611686018428868193", true);
         Thread.sleep(100);
         destinyApiClient.getCharacterProgression("4611686018428868193", "2305843009345925219", true);
@@ -58,6 +58,21 @@ public class Main {
         destinyApiClient.getUniqueWeaponsStats("4611686018428868193", "2305843009345925219", true);
         Thread.sleep(100);
         destinyApiClient.getAccountTriumphs("4611686018428868193", true);
+        Thread.sleep(100);
+        destinyApiClient.getPostGameCarnageReport("2330516073", true);
+        Thread.sleep(100);
+        destinyApiClient.getPostGameCarnageReport("2659248071", true);
+        Thread.sleep(100);
+        destinyApiClient.getPostGameCarnageReport("3393673804", true);
+        Thread.sleep(100);
+        destinyApiClient.getPostGameCarnageReport("4079642014", true);
+        Thread.sleep(100);
+        destinyApiClient.getPostGameCarnageReport("2326253031", true);
+        Thread.sleep(100);
+        destinyApiClient.getPostGameCarnageReport("167419252", true);
+        Thread.sleep(100);
+        destinyApiClient.getMembershipIdByDisplayName("soramusoka", true);
+
         System.out.println("Done");
     }
 

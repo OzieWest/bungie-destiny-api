@@ -1,4 +1,4 @@
-package com.soramusoka.destinyApiClient.dto_layer;
+package com.soramusoka.destinyApiClient.dto_layer.common;
 
 public enum StatGroupType {
     Values("Values"), General("General"), Weapons("Weapons"), Medals("Medals"), Enemies("Enemies");
