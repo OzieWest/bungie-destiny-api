@@ -20,6 +20,7 @@ import com.soramusoka.destinyApiClient.dto_layer.post_game_carnage_report.PostGa
 import com.soramusoka.destinyApiClient.dto_layer.stats_definition.StatsDefinitionResponse;
 import com.soramusoka.destinyApiClient.dto_layer.unique_weapons_stats.UniqueWeaponsStatsResponse;
 import com.soramusoka.destinyApiClient.service_layer.IRequest;
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class DestinyApiClient {
     private String _rootPath = "/Platform/Destiny";
     private MembershipType _membershipType = MembershipType.XBOX;
     private ObjectMapper _mapper = null;
+    public Logger logger;
 
     public DestinyApiClient(IRequest request, MembershipType membershipType) {
         this._mapper = new ObjectMapper();
@@ -49,16 +51,19 @@ public class DestinyApiClient {
      * @throws ApiClientException
      */
     public UserInfoResponse getUserInfoByDisplayName(String displayName) throws ApiClientException {
+        String data = null;
         try {
             String url = this.formUrl("/SearchDestinyPlayer/" + this._membershipType.getValue() + "/" + displayName);
-            String data = this.Request.getUrl(url);
+            data = this.Request.getUrl(url);
 
             UserInfoResponse response = this._mapper.readValue(data, UserInfoResponse.class);
             if (response.ErrorCode != 1)
                 throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
-            throw new ApiClientException(e);
+            ApiClientException exception = new ApiClientException(e);
+            if (this.logger != null) this.logger.error(exception.getMessage());
+            throw exception;
         }
     }
 
@@ -67,7 +72,7 @@ public class DestinyApiClient {
      *
      * @param displayName
      * @param ignorecase
-     * @return
+     * @return MembershipIdResponse
      * @throws ApiClientException
      */
     public MembershipIdResponse getMembershipIdByDisplayName(String displayName, boolean ignorecase) throws ApiClientException {
@@ -81,7 +86,9 @@ public class DestinyApiClient {
                 throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
-            throw new ApiClientException(e);
+            ApiClientException exception = new ApiClientException(e);
+            if (this.logger != null) this.logger.error(exception.getMessage());
+            throw exception;
         }
     }
 
@@ -89,7 +96,7 @@ public class DestinyApiClient {
      * Returns the numerical id of a player based on their display name, zero if not found.
      *
      * @param displayName
-     * @return
+     * @return MembershipIdResponse
      * @throws ApiClientException
      */
     public MembershipIdResponse getMembershipIdByDisplayName(String displayName) throws ApiClientException {
@@ -114,7 +121,9 @@ public class DestinyApiClient {
                 throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
-            throw new ApiClientException(e);
+            ApiClientException exception = new ApiClientException(e);
+            if (this.logger != null) this.logger.error(exception.getMessage());
+            throw exception;
         }
     }
 
@@ -145,7 +154,9 @@ public class DestinyApiClient {
                 throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
-            throw new ApiClientException(e);
+            ApiClientException exception = new ApiClientException(e);
+            if (this.logger != null) this.logger.error(exception.getMessage());
+            throw exception;
         }
     }
 
@@ -168,7 +179,9 @@ public class DestinyApiClient {
                 throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
-            throw new ApiClientException(e);
+            ApiClientException exception = new ApiClientException(e);
+            if (this.logger != null) this.logger.error(exception.getMessage());
+            throw exception;
         }
     }
 
@@ -203,7 +216,9 @@ public class DestinyApiClient {
                 throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
-            throw new ApiClientException(e);
+            ApiClientException exception = new ApiClientException(e);
+            if (this.logger != null) this.logger.error(exception.getMessage());
+            throw exception;
         }
     }
 
@@ -238,7 +253,9 @@ public class DestinyApiClient {
                 throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
-            throw new ApiClientException(e);
+            ApiClientException exception = new ApiClientException(e);
+            if (this.logger != null) this.logger.error(exception.getMessage());
+            throw exception;
         }
     }
 
@@ -281,7 +298,9 @@ public class DestinyApiClient {
                 throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
-            throw new ApiClientException(e);
+            ApiClientException exception = new ApiClientException(e);
+            if (this.logger != null) this.logger.error(exception.getMessage());
+            throw exception;
         }
     }
 
@@ -333,7 +352,9 @@ public class DestinyApiClient {
                 throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
-            throw new ApiClientException(e);
+            ApiClientException exception = new ApiClientException(e);
+            if (this.logger != null) this.logger.error(exception.getMessage());
+            throw exception;
         }
     }
 
@@ -367,7 +388,9 @@ public class DestinyApiClient {
                 throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
-            throw new ApiClientException(e);
+            ApiClientException exception = new ApiClientException(e);
+            if (this.logger != null) this.logger.error(exception.getMessage());
+            throw exception;
         }
     }
 
@@ -404,7 +427,9 @@ public class DestinyApiClient {
                 throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
-            throw new ApiClientException(e);
+            ApiClientException exception = new ApiClientException(e);
+            if (this.logger != null) this.logger.error(exception.getMessage());
+            throw exception;
         }
     }
 
@@ -441,7 +466,9 @@ public class DestinyApiClient {
                 throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
-            throw new ApiClientException(e);
+            ApiClientException exception = new ApiClientException(e);
+            if (this.logger != null) this.logger.error(exception.getMessage());
+            throw exception;
         }
     }
 
@@ -476,7 +503,9 @@ public class DestinyApiClient {
                 throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
-            throw new ApiClientException(e);
+            ApiClientException exception = new ApiClientException(e);
+            if (this.logger != null) this.logger.error(exception.getMessage());
+            throw exception;
         }
     }
 
@@ -510,7 +539,9 @@ public class DestinyApiClient {
                 throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
-            throw new ApiClientException(e);
+            ApiClientException exception = new ApiClientException(e);
+            if (this.logger != null) this.logger.error(exception.getMessage());
+            throw exception;
         }
     }
 
@@ -546,7 +577,9 @@ public class DestinyApiClient {
                 throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
             return response;
         } catch (Exception e) {
-            throw new ApiClientException(e);
+            ApiClientException exception = new ApiClientException(e);
+            if (this.logger != null) this.logger.error(exception.getMessage());
+            throw exception;
         }
     }
 

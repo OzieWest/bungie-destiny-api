@@ -1,6 +1,7 @@
 package com.soramusoka.destinyApiClient;
 
 import com.soramusoka.destinyApiClient.dto_layer.account_items.AccountItemsResponse;
+import com.soramusoka.destinyApiClient.dto_layer.account_stats.AccountStatsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.*;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.Character;
 import com.soramusoka.destinyApiClient.dto_layer.account_triumphs.AccountTriumphsResponse;
@@ -33,36 +34,38 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         CommandLine cmd = getConfig(args);
-        // Logger logger = getLogger("main");
 
         String apiKey = cmd.getOptionValue("apikey");
         String userName = cmd.getOptionValue("username");
 
-        // TESTS
-        MembershipType type = MembershipType.PLAYSTATION;
+        // Smoke tests
         Request request = new Request(apiKey);
+        request.logger = getLogger("Request");
+
+        MembershipType type = MembershipType.PLAYSTATION;
+
         DestinyApiClient destinyApiClient = new DestinyApiClient(request, type);
+        destinyApiClient.logger = getLogger("DestinyApiClient");
 
-        System.out.println("Start");
-
-        UserInfoResponse userInfoResponse = destinyApiClient.getUserInfoByDisplayName("soramusoka");
+        UserInfoResponse userInfoResponse = destinyApiClient.getUserInfoByDisplayName("MattSilver92");
         for (UserInfo userInfo : userInfoResponse.Response) {
             String membershipId = userInfo.membershipId;
 
-            Thread.sleep(100); 
+            Thread.sleep(100);
             AccountItemsResponse accountItemsResponse
                     = destinyApiClient.getAccountItems(membershipId, true);
 
-            Thread.sleep(100); 
+            Thread.sleep(100);
             ArrayList<StatGroupType> types = new ArrayList<>();
             types.add(StatGroupType.Medals);
             types.add(StatGroupType.Enemies);
             types.add(StatGroupType.General);
             types.add(StatGroupType.Values);
             types.add(StatGroupType.Weapons);
-            destinyApiClient.getAccountStats(membershipId, types);
+            AccountStatsResponse accountStatsResponse
+                    = destinyApiClient.getAccountStats(membershipId, types);
 
-            Thread.sleep(100); 
+            Thread.sleep(100);
             AccountTriumphsResponse accountTriumphsResponse
                     = destinyApiClient.getAccountTriumphs(membershipId, true);
 
@@ -80,32 +83,42 @@ public class Main {
                 CharacterActivitiesResponse characterActivitiesResponse
                         = destinyApiClient.getCharacterActivities(membershipId, characterId, true);
 
+                int postGameCarnageReportLimit = 0;
                 for (CharacterActivity characterActivity : characterActivitiesResponse.Response.data.available) {
                     Thread.sleep(100);
                     destinyApiClient.getPostGameCarnageReport(characterActivity.activityHash, true);
+                    postGameCarnageReportLimit++;
+                    if (postGameCarnageReportLimit >= 5) {
+                        break;
+                    }
                 }
 
-                Thread.sleep(100); 
+                Thread.sleep(100);
                 ActivityHistoryStatsResponse activityHistoryStatsResponse
-                        = destinyApiClient.getActivityHistoryStats(membershipId, characterId, 10, 0, ActivityType.Story, true);
+                        = destinyApiClient.getActivityHistoryStats(membershipId, characterId, 100, 0, ActivityType.Story, true);
 
-                Thread.sleep(100); 
+                Thread.sleep(100);
                 AggregateActivityStatsResponse aggregateActivityStatsResponse
                         = destinyApiClient.getAggregateActivityStats(membershipId, characterId, true);
 
-                Thread.sleep(100); 
+                Thread.sleep(100);
                 UniqueWeaponsStatsResponse uniqueWeaponsStatsResponse
                         = destinyApiClient.getUniqueWeaponsStats(membershipId, characterId, true);
 
-                Thread.sleep(100); 
+                Thread.sleep(100);
                 CharacterInventoryResponse characterInventoryResponse
                         = destinyApiClient.getCharacterInventorySummary(membershipId, characterId, true);
 
+                int itemsLimit = 0;
                 InventoryItem[] items = characterInventoryResponse.Response.data.items;
                 for (InventoryItem item : items) {
-                    Thread.sleep(100); 
+                    Thread.sleep(100);
                     String itemId = item.itemId;
                     destinyApiClient.getInventoryItem(membershipId, characterId, itemId, true);
+                    itemsLimit++;
+                    if (itemsLimit >= 10) {
+                        break;
+                    }
                 }
             }
         }
@@ -123,7 +136,7 @@ public class Main {
     private static Logger getLogger(String appName) throws Exception {
         try {
             Properties log4jProperties = new Properties();
-            log4jProperties.setProperty("log4j.logger." + appName, "DEBUG, myConsoleAppender");
+            log4jProperties.setProperty("log4j.logger." + appName, "INFO, myConsoleAppender");
             log4jProperties.setProperty("log4j.appender.myConsoleAppender", "org.apache.log4j.ConsoleAppender");
             log4jProperties.setProperty("log4j.appender.myConsoleAppender.layout", "org.apache.log4j.PatternLayout");
             log4jProperties.setProperty("log4j.appender.myConsoleAppender.layout.ConversionPattern", "%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n");
