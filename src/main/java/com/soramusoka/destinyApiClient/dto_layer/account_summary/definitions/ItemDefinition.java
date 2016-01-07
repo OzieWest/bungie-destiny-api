@@ -13,6 +13,7 @@ public class ItemDefinition extends BaseDefinition {
     public String itemDescription;
     public String icon;
     public String secondaryIcon;
+    public String displaySource;
     public String actionName;
     public boolean hasAction;
     public boolean deleteOnAction;
@@ -50,6 +51,7 @@ public class ItemDefinition extends BaseDefinition {
     public Object[] setItemHashes;
     public double questlineItemHash;
     public boolean needsFullCompletion;
+    public String objectiveVerb;
     public Object[] objectiveHashes;
     public boolean allowActions;
     public double questTrackingUnlockValueHash;

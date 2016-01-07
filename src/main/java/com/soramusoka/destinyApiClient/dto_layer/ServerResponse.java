@@ -1,6 +1,6 @@
 package com.soramusoka.destinyApiClient.dto_layer;
 
-public class DestinyServerResponse {
+public class ServerResponse {
     public int ErrorCode;
     public int ThrottleSeconds;
     public String ErrorStatus;

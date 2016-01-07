@@ -1,7 +1,7 @@
 package com.soramusoka.destinyApiClient.dto_layer.character_activities;
 
 public class CharacterActivity {
-    public double activityHash;
+    public long activityHash;
     public boolean isNew;
     public boolean canLead;
     public boolean canJoin;
