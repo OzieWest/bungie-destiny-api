@@ -20,27 +20,31 @@ import com.soramusoka.destinyApiClient.dto_layer.post_game_carnage_report.PostGa
 import com.soramusoka.destinyApiClient.dto_layer.stats_definition.StatsDefinitionResponse;
 import com.soramusoka.destinyApiClient.dto_layer.unique_weapons_stats.UniqueWeaponsStatsResponse;
 import com.soramusoka.destinyApiClient.service_layer.IRequest;
-import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.util.ArrayList;
 
 public class DestinyApiClient {
+    private MembershipType _membershipType = null;
+
+    public String ApiRoot = "http://www.bungie.net/Platform/Destiny";
     public IRequest Request;
-    private String _hostName = "http://www.bungie.net";
-    private String _rootPath = "/Platform/Destiny";
-    private MembershipType _membershipType = MembershipType.XBOX;
-    private ObjectMapper _mapper = null;
-    public Logger logger;
+    public ObjectMapper Mapper = null;
 
     public DestinyApiClient(IRequest request, MembershipType membershipType) {
-        this._mapper = new ObjectMapper();
+        this.Mapper = new ObjectMapper();
+        this.Request = request;
+        this._membershipType = membershipType;
+    }
+
+    public DestinyApiClient(IRequest request, ObjectMapper objectMapper, MembershipType membershipType) {
+        this.Mapper = objectMapper;
         this.Request = request;
         this._membershipType = membershipType;
     }
 
     private String formUrl(String url) {
-        return this._hostName + this._rootPath + url;
+        return this.ApiRoot + url;
     }
 
     /**
@@ -50,20 +54,17 @@ public class DestinyApiClient {
      * @return UserInfoResponse
      * @throws ApiClientException
      */
-    public UserInfoResponse getUserInfoByDisplayName(String displayName) throws ApiClientException {
-        String data = null;
+    public UserInfoResponse getUserInfo(String displayName) throws ApiClientException {
         try {
             String url = this.formUrl("/SearchDestinyPlayer/" + this._membershipType.getValue() + "/" + displayName);
-            data = this.Request.getUrl(url);
+            String data = this.Request.getUrl(url);
 
-            UserInfoResponse response = this._mapper.readValue(data, UserInfoResponse.class);
+            UserInfoResponse response = this.Mapper.readValue(data, UserInfoResponse.class);
             if (response.ErrorCode != 1)
-                throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
             return response;
         } catch (Exception e) {
-            ApiClientException exception = new ApiClientException(e);
-            if (this.logger != null) this.logger.error(exception.getMessage());
-            throw exception;
+            throw new ApiClientException(e);
         }
     }
 
@@ -75,20 +76,18 @@ public class DestinyApiClient {
      * @return MembershipIdResponse
      * @throws ApiClientException
      */
-    public MembershipIdResponse getMembershipIdByDisplayName(String displayName, boolean ignorecase) throws ApiClientException {
+    public MembershipIdResponse getMembershipId(String displayName, boolean ignorecase) throws ApiClientException {
         try {
             String query = "?ignorecase=" + ignorecase;
             String url = this.formUrl("/" + this._membershipType.getValue() + "/Stats/GetMembershipIdByDisplayName/" + displayName + query);
             String data = this.Request.getUrl(url);
 
-            MembershipIdResponse response = this._mapper.readValue(data, MembershipIdResponse.class);
+            MembershipIdResponse response = this.Mapper.readValue(data, MembershipIdResponse.class);
             if (response.ErrorCode != 1)
-                throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
             return response;
         } catch (Exception e) {
-            ApiClientException exception = new ApiClientException(e);
-            if (this.logger != null) this.logger.error(exception.getMessage());
-            throw exception;
+            throw new ApiClientException(e);
         }
     }
 
@@ -100,7 +99,7 @@ public class DestinyApiClient {
      * @throws ApiClientException
      */
     public MembershipIdResponse getMembershipIdByDisplayName(String displayName) throws ApiClientException {
-        return this.getMembershipIdByDisplayName(displayName, false);
+        return this.getMembershipId(displayName, false);
     }
 
     /**
@@ -116,14 +115,12 @@ public class DestinyApiClient {
             String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Summary" + "?definitions=" + withDefinitions);
             String data = this.Request.getUrl(url);
 
-            AccountSummaryResponse response = this._mapper.readValue(data, AccountSummaryResponse.class);
+            AccountSummaryResponse response = this.Mapper.readValue(data, AccountSummaryResponse.class);
             if (response.ErrorCode != 1)
-                throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
             return response;
         } catch (Exception e) {
-            ApiClientException exception = new ApiClientException(e);
-            if (this.logger != null) this.logger.error(exception.getMessage());
-            throw exception;
+            throw new ApiClientException(e);
         }
     }
 
@@ -149,14 +146,12 @@ public class DestinyApiClient {
             String url = this.formUrl("/Stats/Definition/");
             String data = this.Request.getUrl(url);
 
-            StatsDefinitionResponse response = this._mapper.readValue(data, StatsDefinitionResponse.class);
+            StatsDefinitionResponse response = this.Mapper.readValue(data, StatsDefinitionResponse.class);
             if (response.ErrorCode != 1)
-                throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
             return response;
         } catch (Exception e) {
-            ApiClientException exception = new ApiClientException(e);
-            if (this.logger != null) this.logger.error(exception.getMessage());
-            throw exception;
+            throw new ApiClientException(e);
         }
     }
 
@@ -174,14 +169,12 @@ public class DestinyApiClient {
             String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Character/" + characterId + "/Progression" + "?definitions=" + withDefinitions);
             String data = this.Request.getUrl(url);
 
-            CharacterProgressionResponse response = this._mapper.readValue(data, CharacterProgressionResponse.class);
+            CharacterProgressionResponse response = this.Mapper.readValue(data, CharacterProgressionResponse.class);
             if (response.ErrorCode != 1)
-                throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
             return response;
         } catch (Exception e) {
-            ApiClientException exception = new ApiClientException(e);
-            if (this.logger != null) this.logger.error(exception.getMessage());
-            throw exception;
+            throw new ApiClientException(e);
         }
     }
 
@@ -211,14 +204,12 @@ public class DestinyApiClient {
             String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Character/" + characterId + "/Activities" + "?definitions=" + withDefinitions);
             String data = this.Request.getUrl(url);
 
-            CharacterActivitiesResponse response = this._mapper.readValue(data, CharacterActivitiesResponse.class);
+            CharacterActivitiesResponse response = this.Mapper.readValue(data, CharacterActivitiesResponse.class);
             if (response.ErrorCode != 1)
-                throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
             return response;
         } catch (Exception e) {
-            ApiClientException exception = new ApiClientException(e);
-            if (this.logger != null) this.logger.error(exception.getMessage());
-            throw exception;
+            throw new ApiClientException(e);
         }
     }
 
@@ -248,14 +239,12 @@ public class DestinyApiClient {
             String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Character/" + characterId + "/Inventory/Summary" + "?definitions=" + withDefinitions);
             String data = this.Request.getUrl(url);
 
-            CharacterInventoryResponse response = this._mapper.readValue(data, CharacterInventoryResponse.class);
+            CharacterInventoryResponse response = this.Mapper.readValue(data, CharacterInventoryResponse.class);
             if (response.ErrorCode != 1)
-                throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
             return response;
         } catch (Exception e) {
-            ApiClientException exception = new ApiClientException(e);
-            if (this.logger != null) this.logger.error(exception.getMessage());
-            throw exception;
+            throw new ApiClientException(e);
         }
     }
 
@@ -293,14 +282,12 @@ public class DestinyApiClient {
             String url = this.formUrl("/Stats/ActivityHistory/" + this._membershipType.getValue() + "/" + membershipId + "/" + characterId + "/?" + query);
             String data = this.Request.getUrl(url);
 
-            ActivityHistoryStatsResponse response = this._mapper.readValue(data, ActivityHistoryStatsResponse.class);
+            ActivityHistoryStatsResponse response = this.Mapper.readValue(data, ActivityHistoryStatsResponse.class);
             if (response.ErrorCode != 1)
-                throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
             return response;
         } catch (Exception e) {
-            ApiClientException exception = new ApiClientException(e);
-            if (this.logger != null) this.logger.error(exception.getMessage());
-            throw exception;
+            throw new ApiClientException(e);
         }
     }
 
@@ -347,14 +334,12 @@ public class DestinyApiClient {
             String url = this.formUrl("/Stats/AggregateActivityStats/" + this._membershipType.getValue() + "/" + membershipId + "/" + characterId + "?definitions=" + withDefinitions);
             String data = this.Request.getUrl(url);
 
-            AggregateActivityStatsResponse response = this._mapper.readValue(data, AggregateActivityStatsResponse.class);
+            AggregateActivityStatsResponse response = this.Mapper.readValue(data, AggregateActivityStatsResponse.class);
             if (response.ErrorCode != 1)
-                throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
             return response;
         } catch (Exception e) {
-            ApiClientException exception = new ApiClientException(e);
-            if (this.logger != null) this.logger.error(exception.getMessage());
-            throw exception;
+            throw new ApiClientException(e);
         }
     }
 
@@ -383,14 +368,12 @@ public class DestinyApiClient {
             String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Items" + "?definitions=" + withDefinitions);
             String data = this.Request.getUrl(url);
 
-            AccountItemsResponse response = this._mapper.readValue(data, AccountItemsResponse.class);
+            AccountItemsResponse response = this.Mapper.readValue(data, AccountItemsResponse.class);
             if (response.ErrorCode != 1)
-                throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
             return response;
         } catch (Exception e) {
-            ApiClientException exception = new ApiClientException(e);
-            if (this.logger != null) this.logger.error(exception.getMessage());
-            throw exception;
+            throw new ApiClientException(e);
         }
     }
 
@@ -422,14 +405,12 @@ public class DestinyApiClient {
             String url = this.formUrl("/Stats/Account/" + this._membershipType.getValue() + "/" + membershipId + query);
             String data = this.Request.getUrl(url);
 
-            AccountStatsResponse response = this._mapper.readValue(data, AccountStatsResponse.class);
+            AccountStatsResponse response = this.Mapper.readValue(data, AccountStatsResponse.class);
             if (response.ErrorCode != 1)
-                throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
             return response;
         } catch (Exception e) {
-            ApiClientException exception = new ApiClientException(e);
-            if (this.logger != null) this.logger.error(exception.getMessage());
-            throw exception;
+            throw new ApiClientException(e);
         }
     }
 
@@ -461,14 +442,12 @@ public class DestinyApiClient {
             String url = this.formUrl("/Stats/UniqueWeapons/" + this._membershipType.getValue() + "/" + membershipId + "/" + characterId + "?definitions=" + withDefinitions);
             String data = this.Request.getUrl(url);
 
-            UniqueWeaponsStatsResponse response = this._mapper.readValue(data, UniqueWeaponsStatsResponse.class);
+            UniqueWeaponsStatsResponse response = this.Mapper.readValue(data, UniqueWeaponsStatsResponse.class);
             if (response.ErrorCode != 1)
-                throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
             return response;
         } catch (Exception e) {
-            ApiClientException exception = new ApiClientException(e);
-            if (this.logger != null) this.logger.error(exception.getMessage());
-            throw exception;
+            throw new ApiClientException(e);
         }
     }
 
@@ -498,14 +477,12 @@ public class DestinyApiClient {
             String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Triumphs" + query);
             String data = this.Request.getUrl(url);
 
-            AccountTriumphsResponse response = this._mapper.readValue(data, AccountTriumphsResponse.class);
+            AccountTriumphsResponse response = this.Mapper.readValue(data, AccountTriumphsResponse.class);
             if (response.ErrorCode != 1)
-                throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
             return response;
         } catch (Exception e) {
-            ApiClientException exception = new ApiClientException(e);
-            if (this.logger != null) this.logger.error(exception.getMessage());
-            throw exception;
+            throw new ApiClientException(e);
         }
     }
 
@@ -534,14 +511,12 @@ public class DestinyApiClient {
             String url = this.formUrl("/Stats/PostGameCarnageReport/" + Long.toString(activityHashId) + query);
             String data = this.Request.getUrl(url);
 
-            PostGameCarnageReportResponse response = this._mapper.readValue(data, PostGameCarnageReportResponse.class);
+            PostGameCarnageReportResponse response = this.Mapper.readValue(data, PostGameCarnageReportResponse.class);
             if (response.ErrorCode != 1)
-                throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
             return response;
         } catch (Exception e) {
-            ApiClientException exception = new ApiClientException(e);
-            if (this.logger != null) this.logger.error(exception.getMessage());
-            throw exception;
+            throw new ApiClientException(e);
         }
     }
 
@@ -572,14 +547,12 @@ public class DestinyApiClient {
             String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Character/" + characterId + "/Inventory/" + itemInstanceId + query);
             String data = this.Request.getUrl(url);
 
-            InventoryItemResponse response = this._mapper.readValue(data, InventoryItemResponse.class);
+            InventoryItemResponse response = this.Mapper.readValue(data, InventoryItemResponse.class);
             if (response.ErrorCode != 1)
-                throw new ApiClientException(response.ErrorStatus + ". " + response.Message);
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
             return response;
         } catch (Exception e) {
-            ApiClientException exception = new ApiClientException(e);
-            if (this.logger != null) this.logger.error(exception.getMessage());
-            throw exception;
+            throw new ApiClientException(e);
         }
     }
 

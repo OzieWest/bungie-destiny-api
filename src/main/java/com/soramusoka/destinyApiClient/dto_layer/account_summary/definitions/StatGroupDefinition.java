@@ -6,7 +6,7 @@ import com.soramusoka.destinyApiClient.dto_layer.common.BaseDefinition;
 import java.util.LinkedHashMap;
 
 public class StatGroupDefinition extends BaseDefinition {
-    public double statGroupHash;
+    public long statGroupHash;
     public int maximumValue;
     public int uiPosition;
     public ScaledStat[] scaledStats;

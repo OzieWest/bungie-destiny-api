@@ -1,6 +1,6 @@
 package com.soramusoka.destinyApiClient.dto_layer.account_triumphs;
 
 public class TriumphSet {
-    public double triumphSetHash;
+    public long triumphSetHash;
     public TriumphValue[] triumphs;
 }

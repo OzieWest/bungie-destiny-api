@@ -5,7 +5,7 @@ import com.soramusoka.destinyApiClient.dto_layer.common.LevelProgression;
 public class Character {
     public String emblemPath;
     public String backgroundPath;
-    public double emblemHash;
+    public long emblemHash;
     public int characterLevel;
     public int baseCharacterLevel;
     public boolean isPrestigeLevel;

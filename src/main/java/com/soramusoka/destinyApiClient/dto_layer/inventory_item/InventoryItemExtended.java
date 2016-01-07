@@ -19,10 +19,10 @@ public class InventoryItemExtended extends BaseInventoryItem {
     public StatItem primaryStat;
     public boolean canEquip;
     public int equipRequiredLevel;
-    public double unlockFlagHashRequiredToEquip;
+    public long unlockFlagHashRequiredToEquip;
     public int cannotEquipReason;
     public LevelProgression progression;
-    public double talentGridHash;
+    public long talentGridHash;
     public InventoryItemTalentNode[] nodes;
     public boolean useCustomDyes;
     public LinkedHashMap<String, Integer> artRegions;

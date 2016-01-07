@@ -10,5 +10,5 @@ public class TriumphDefinition extends BaseDefinition {
     public boolean hasProgress;
     public int minimumProgress;
     public int maximumProgress;
-    public double lockdownUnlockHash;
+    public long lockdownUnlockHash;
 }

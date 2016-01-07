@@ -4,6 +4,6 @@ public class InventoryItem extends BaseInventoryItem {
     public String itemId;
     public int quantity;
     public int characterIndex;
-    public double bucketHash;
+    public long bucketHash;
     public StatItem primaryStat;
 }

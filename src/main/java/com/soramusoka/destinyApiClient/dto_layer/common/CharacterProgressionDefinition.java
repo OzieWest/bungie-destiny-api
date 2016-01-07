@@ -1,7 +1,7 @@
 package com.soramusoka.destinyApiClient.dto_layer.common;
 
 public class CharacterProgressionDefinition extends BaseDefinition {
-    public double progressionHash;
+    public long progressionHash;
     public String name;
     public int scope;
     public boolean repeatLastStep;

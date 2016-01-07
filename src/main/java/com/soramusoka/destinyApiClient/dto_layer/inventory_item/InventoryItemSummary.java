@@ -9,6 +9,6 @@ public class InventoryItemSummary {
     public InventoryItemTalentNodeExtended[] talentNodes;
     public LinkedHashMap<String, StatsOnNodes> statsOnNodes;
     public StatItem[] characterStatsToDisplay;
-    public double[] materialItemHashes;
+    public long[] materialItemHashes;
     public LinkedHashMap<String, Integer> materialQuantities;
 }

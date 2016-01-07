@@ -3,7 +3,7 @@ package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 import com.soramusoka.destinyApiClient.dto_layer.common.BaseDefinition;
 
 public class ClassDefinition extends BaseDefinition {
-    public double classHash;
+    public long classHash;
     public int classType;
     public String className;
     public String classNameMale;

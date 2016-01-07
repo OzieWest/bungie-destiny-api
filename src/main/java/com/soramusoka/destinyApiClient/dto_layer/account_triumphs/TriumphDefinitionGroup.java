@@ -5,7 +5,7 @@ import com.soramusoka.destinyApiClient.dto_layer.common.BaseDefinition;
 import java.util.Date;
 
 public class TriumphDefinitionGroup extends BaseDefinition {
-    public double triumphSetHash;
+    public long triumphSetHash;
     public String identifier;
     public int order;
     public String title;

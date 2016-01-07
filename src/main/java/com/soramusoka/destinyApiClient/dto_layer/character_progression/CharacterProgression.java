@@ -5,7 +5,7 @@ import com.soramusoka.destinyApiClient.dto_layer.common.LevelProgression;
 public class CharacterProgression {
     public int baseCharacterLevel;
     public boolean isPrestigeLevel;
-    public double factionProgressionHash;
+    public long factionProgressionHash;
     public float percentToNextLevel;
     public LevelProgression levelProgression;
     public LevelProgression[] progressions;

@@ -5,7 +5,7 @@ import com.soramusoka.destinyApiClient.dto_layer.common.BaseDefinition;
 public class PerkDefinition extends BaseDefinition {
     public String displayDescription;
     public String displayName;
-    public double perkHash;
+    public long perkHash;
     public String displayIcon;
     public boolean isDisplayable;
     public PerkGroups perkGroups;

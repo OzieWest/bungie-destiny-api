@@ -11,6 +11,6 @@ public class ItemSource {
     public int maxLevelRequired;
     public int exclusivity;
     public LinkedHashMap<String, ComputedStat> computedStats;
-    public double[] sourceHashes;
+    public long[] sourceHashes;
     public int[] spawnIndexes;
 }

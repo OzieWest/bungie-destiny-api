@@ -43,11 +43,9 @@ public class Main {
         request.logger = getLogger("Request");
 
         MembershipType type = MembershipType.PLAYSTATION;
-
         DestinyApiClient destinyApiClient = new DestinyApiClient(request, type);
-        destinyApiClient.logger = getLogger("DestinyApiClient");
 
-        UserInfoResponse userInfoResponse = destinyApiClient.getUserInfoByDisplayName("MattSilver92");
+        UserInfoResponse userInfoResponse = destinyApiClient.getUserInfo("soramusoka");
         for (UserInfo userInfo : userInfoResponse.Response) {
             String membershipId = userInfo.membershipId;
 
@@ -88,7 +86,7 @@ public class Main {
                     Thread.sleep(100);
                     destinyApiClient.getPostGameCarnageReport(characterActivity.activityHash, true);
                     postGameCarnageReportLimit++;
-                    if (postGameCarnageReportLimit >= 5) {
+                    if (postGameCarnageReportLimit >= 20) {
                         break;
                     }
                 }
@@ -116,7 +114,7 @@ public class Main {
                     String itemId = item.itemId;
                     destinyApiClient.getInventoryItem(membershipId, characterId, itemId, true);
                     itemsLimit++;
-                    if (itemsLimit >= 10) {
+                    if (itemsLimit >= 20) {
                         break;
                     }
                 }

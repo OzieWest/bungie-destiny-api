@@ -2,7 +2,7 @@ package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 
 public class TalentGridNode {
     public int nodeIndex;
-    public double nodeHash;
+    public long nodeHash;
     public int row;
     public int column;
     public int[] prerequisiteNodeIndexes;
@@ -13,7 +13,7 @@ public class TalentGridNode {
     public boolean isRandomRepurchasable;
     public int[] exlusiveWithNodes;
     public int randomStartProgressionBarAtProgression;
-    public double originalNodeHash;
+    public long originalNodeHash;
     public TalentGridNodeStep[] steps;
     public Requirement randomActivationRequirement;
 }

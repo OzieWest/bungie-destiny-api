@@ -9,6 +9,6 @@ public class EquippingBlock {
     public Object[] lockedDyes;
     public Object[] customDyes;
     public CustomDyeExpression customDyeExpression;
-    public double weaponPatternHash;
+    public long weaponPatternHash;
     public Arrangement[] arrangements;
 }

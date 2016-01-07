@@ -5,5 +5,5 @@ public class InventoryItemTalentNodeExtended extends InventoryItemTalentNode {
     public String stateId;
     public UpgradeMaterial[] materialsToUpgrade;
     public int activationGridLevel;
-    public double progressPercent;
+    public long progressPercent;
 }

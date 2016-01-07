@@ -2,20 +2,20 @@ package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 
 public class TalentGridNodeStep {
     public int stepIndex;
-    public double nodeStepHash;
+    public long nodeStepHash;
     public String nodeStepName;
     public String nodeStepDescription;
     public String interactionDescription;
     public String icon;
     public int damageType;
-    public double damageTypeHash;
+    public long damageTypeHash;
     public ActivationRequirement activationRequirement;
     public boolean canActivateNextStep;
     public int nextStepIndex;
     public boolean isNextStepRandom;
-    public double[] perkHashes;
+    public long[] perkHashes;
     public int startProgressionBarAtProgress;
-    public double[] statHashes;
+    public long[] statHashes;
     public boolean affectsQuality;
     public int trueStepIndex;
     public int truePropertyIndex;

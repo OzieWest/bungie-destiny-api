@@ -3,7 +3,7 @@ package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 import com.soramusoka.destinyApiClient.dto_layer.common.BaseDefinition;
 
 public class StatDefinition extends BaseDefinition {
-    public double statHash;
+    public long statHash;
     public String statName;
     public String statDescription;
     public String icon;

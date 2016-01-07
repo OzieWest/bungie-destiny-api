@@ -3,7 +3,7 @@ package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 import com.soramusoka.destinyApiClient.dto_layer.common.BaseDefinition;
 
 public class ActivityTypeDefinition extends BaseDefinition {
-    public double activityTypeHash;
+    public long activityTypeHash;
     public String identifier;
     public String activityTypeName;
     public String activityTypeDescription;

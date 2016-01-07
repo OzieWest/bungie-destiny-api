@@ -8,5 +8,5 @@ public class LevelProgression {
     public int step;
     public int progressToNextLevel;
     public int nextLevelAt;
-    public double progressionHash;
+    public long progressionHash;
 }
