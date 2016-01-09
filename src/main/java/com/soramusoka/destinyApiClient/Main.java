@@ -11,10 +11,8 @@ import com.soramusoka.destinyApiClient.dto_layer.character_activities.CharacterA
 import com.soramusoka.destinyApiClient.dto_layer.character_activities.CharacterActivity;
 import com.soramusoka.destinyApiClient.dto_layer.character_inventory.CharacterInventoryResponse;
 import com.soramusoka.destinyApiClient.dto_layer.character_progression.CharacterProgressionResponse;
-import com.soramusoka.destinyApiClient.dto_layer.common.ActivityType;
-import com.soramusoka.destinyApiClient.dto_layer.common.InventoryItem;
-import com.soramusoka.destinyApiClient.dto_layer.common.MembershipType;
-import com.soramusoka.destinyApiClient.dto_layer.common.StatGroupType;
+import com.soramusoka.destinyApiClient.dto_layer.character_stats.CharacterStatsResponse;
+import com.soramusoka.destinyApiClient.dto_layer.common.*;
 import com.soramusoka.destinyApiClient.dto_layer.unique_weapons_stats.UniqueWeaponsStatsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.user_info.UserInfo;
 import com.soramusoka.destinyApiClient.dto_layer.user_info.UserInfoResponse;
@@ -27,7 +25,6 @@ import org.apache.commons.cli.Options;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import java.util.ArrayList;
 import java.util.Properties;
 
 public class Main {
@@ -54,14 +51,8 @@ public class Main {
                     = destinyApiClient.getAccountItems(membershipId, true);
 
             Thread.sleep(100);
-            ArrayList<StatGroupType> types = new ArrayList<>();
-            types.add(StatGroupType.Medals);
-            types.add(StatGroupType.Enemies);
-            types.add(StatGroupType.General);
-            types.add(StatGroupType.Values);
-            types.add(StatGroupType.Weapons);
             AccountStatsResponse accountStatsResponse
-                    = destinyApiClient.getAccountStats(membershipId, types);
+                    = destinyApiClient.getAccountStats(membershipId, StatGroupType.AllTypes);
 
             Thread.sleep(100);
             AccountTriumphsResponse accountTriumphsResponse
@@ -72,6 +63,11 @@ public class Main {
 
             for (Character character : accountSummaryResponse.Response.data.characters) {
                 String characterId = character.characterBase.characterId;
+
+                Thread.sleep(100);
+                CharacterStatsResponse characterStatsResponse
+                        = destinyApiClient.getCharacterStats(membershipId, characterId,
+                        ActivityType.AllArena, StatGroupType.AllTypes, PeriodType.AllTime, null, null, null, null);
 
                 Thread.sleep(100);
                 CharacterProgressionResponse characterProgressionResponse

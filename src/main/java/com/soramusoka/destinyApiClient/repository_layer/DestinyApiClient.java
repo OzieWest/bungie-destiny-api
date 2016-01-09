@@ -1,8 +1,10 @@
 package com.soramusoka.destinyApiClient.repository_layer;
 
 import com.soramusoka.destinyApiClient.dto_layer.ApiClientException;
+import com.soramusoka.destinyApiClient.dto_layer.character_stats.CharacterStatsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.common.ActivityType;
 import com.soramusoka.destinyApiClient.dto_layer.common.MembershipType;
+import com.soramusoka.destinyApiClient.dto_layer.common.PeriodType;
 import com.soramusoka.destinyApiClient.dto_layer.common.StatGroupType;
 import com.soramusoka.destinyApiClient.dto_layer.account_items.AccountItemsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.account_stats.AccountStatsResponse;
@@ -23,6 +25,7 @@ import com.soramusoka.destinyApiClient.service_layer.IRequest;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DestinyApiClient {
     private MembershipType _membershipType = null;
@@ -396,12 +399,9 @@ public class DestinyApiClient {
      * @return AccountStatsResponse
      * @throws ApiClientException
      */
-    public AccountStatsResponse getAccountStats(String membershipId, ArrayList<StatGroupType> groups) throws ApiClientException {
+    public AccountStatsResponse getAccountStats(String membershipId, StatGroupType groups) throws ApiClientException {
         try {
-            String query = "?groups=";
-            for (StatGroupType group : groups) {
-                query += group + ",";
-            }
+            String query = "?groups=" + groups.getValue();
             String url = this.formUrl("/Stats/Account/" + this._membershipType.getValue() + "/" + membershipId + query);
             String data = this.Request.getUrl(url);
 
@@ -412,20 +412,6 @@ public class DestinyApiClient {
         } catch (Exception e) {
             throw new ApiClientException(e);
         }
-    }
-
-    /**
-     * Gets aggregate historical stats organized around each character for a given account.
-     *
-     * @param membershipId
-     * @param groups
-     * @return AccountStatsResponse
-     * @throws ApiClientException
-     */
-    public AccountStatsResponse getAccountStats(String membershipId, StatGroupType groups) throws ApiClientException {
-        ArrayList<StatGroupType> types = new ArrayList<>();
-        types.add(groups);
-        return this.getAccountStats(membershipId, types);
     }
 
     /**
@@ -567,5 +553,46 @@ public class DestinyApiClient {
      */
     public InventoryItemResponse getInventoryItem(String membershipId, String characterId, String itemInstanceId) throws ApiClientException {
         return this.getInventoryItem(membershipId, characterId, itemInstanceId, false);
+    }
+
+
+    /**
+     * Gets historical stats for indicated character.
+     *
+     * @param membershipId
+     * @param characterId
+     * @param modes
+     * @param groups
+     * @param period
+     * @param monthstart
+     * @param monthend
+     * @param daystart
+     * @param dayend
+     * @return CharacterStatsResponse
+     * @throws ApiClientException
+     */
+    public CharacterStatsResponse getCharacterStats(String membershipId, String characterId,
+                                                    ActivityType modes, StatGroupType groups, PeriodType period,
+                                                    String monthstart, String monthend,
+                                                    String daystart, String dayend) throws ApiClientException {
+        try {
+            String query = "?groups=" + groups.getValue() +
+                    "&modes=" + modes.getValue() +
+                    "&period=" + period.getValue() +
+                    "$monthstart=" + monthstart +
+                    "$monthend=" + monthend +
+                    "$daystart=" + daystart +
+                    "$dayend=" + dayend;
+
+            String url = this.formUrl("/Stats/" + this._membershipType.getValue() + "/" + membershipId + "/" + characterId + query);
+            String data = this.Request.getUrl(url);
+
+            CharacterStatsResponse response = this.Mapper.readValue(data, CharacterStatsResponse.class);
+            if (response.ErrorCode != 1)
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
+            return response;
+        } catch (Exception e) {
+            throw new ApiClientException(e);
+        }
     }
 }
