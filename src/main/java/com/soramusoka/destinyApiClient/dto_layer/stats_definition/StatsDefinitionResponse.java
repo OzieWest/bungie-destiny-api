@@ -1,8 +1,9 @@
 package com.soramusoka.destinyApiClient.dto_layer.stats_definition;
 
 import com.soramusoka.destinyApiClient.dto_layer.ServerResponse;
-import com.soramusoka.destinyApiClient.dto_layer.common.StatGroupOf;
+
+import java.util.LinkedHashMap;
 
 public class StatsDefinitionResponse extends ServerResponse {
-    public StatGroupOf<StatDefinition> Response;
+    public LinkedHashMap<String, StatDefinition> Response;
 }
