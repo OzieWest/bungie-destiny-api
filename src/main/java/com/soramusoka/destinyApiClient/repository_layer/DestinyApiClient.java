@@ -1,6 +1,7 @@
 package com.soramusoka.destinyApiClient.repository_layer;
 
 import com.soramusoka.destinyApiClient.dto_layer.ApiClientException;
+import com.soramusoka.destinyApiClient.dto_layer.account_grimoire.AccountGrimoireResponse;
 import com.soramusoka.destinyApiClient.dto_layer.character_stats.CharacterStatsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.common.ActivityType;
 import com.soramusoka.destinyApiClient.dto_layer.common.MembershipType;
@@ -580,10 +581,10 @@ public class DestinyApiClient {
             String query = "?groups=" + groups.getValue() +
                     "&modes=" + modes.getValue() +
                     "&period=" + period.getValue() +
-                    "$monthstart=" + monthstart +
-                    "$monthend=" + monthend +
-                    "$daystart=" + daystart +
-                    "$dayend=" + dayend;
+                    "&monthstart=" + monthstart +
+                    "&monthend=" + monthend +
+                    "&daystart=" + daystart +
+                    "&dayend=" + dayend;
 
             String url = this.formUrl("/Stats/" + this._membershipType.getValue() + "/" + membershipId + "/" + characterId + query);
             String data = this.Request.getUrl(url);
@@ -615,5 +616,43 @@ public class DestinyApiClient {
         } catch (Exception e) {
             throw new ApiClientException(e);
         }
+    }
+
+    /**
+     * Gets someone else's Grimoire.
+     *
+     * @param membershipId
+     * @param single
+     * @param flavour
+     * @param withDefinitions
+     * @return AccountGrimoireResponse
+     * @throws ApiClientException
+     */
+    public AccountGrimoireResponse getGrimoire(String membershipId, boolean single, boolean flavour, boolean withDefinitions) throws ApiClientException {
+        try {
+            String query = "?definitions=" + withDefinitions;
+            String url = this.formUrl("/Vanguard/Grimoire/" + this._membershipType.getValue() + "/" + membershipId + query);
+            String data = this.Request.getUrl(url);
+
+            AccountGrimoireResponse response = this.Mapper.readValue(data, AccountGrimoireResponse.class);
+            if (response.ErrorCode != 1)
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
+            return response;
+        } catch (Exception e) {
+            throw new ApiClientException(e);
+        }
+    }
+
+    /**
+     * Gets someone else's Grimoire.
+     *
+     * @param membershipId
+     * @param single
+     * @param flavour
+     * @return AccountGrimoireResponse
+     * @throws ApiClientException
+     */
+    public AccountGrimoireResponse getGrimoire(String membershipId, boolean single, boolean flavour) throws ApiClientException {
+        return this.getGrimoire(membershipId, single, flavour, false);
     }
 }

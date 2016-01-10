@@ -1,5 +1,6 @@
 package com.soramusoka.destinyApiClient;
 
+import com.soramusoka.destinyApiClient.dto_layer.account_grimoire.AccountGrimoireResponse;
 import com.soramusoka.destinyApiClient.dto_layer.account_items.AccountItemsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.account_stats.AccountStatsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.*;
@@ -13,6 +14,7 @@ import com.soramusoka.destinyApiClient.dto_layer.character_inventory.CharacterIn
 import com.soramusoka.destinyApiClient.dto_layer.character_progression.CharacterProgressionResponse;
 import com.soramusoka.destinyApiClient.dto_layer.character_stats.CharacterStatsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.common.*;
+import com.soramusoka.destinyApiClient.dto_layer.grimoire_definitions.GrimoireDefinitionsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.unique_weapons_stats.UniqueWeaponsStatsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.user_info.UserInfo;
 import com.soramusoka.destinyApiClient.dto_layer.user_info.UserInfoResponse;
@@ -42,11 +44,15 @@ public class Main {
         MembershipType type = MembershipType.PLAYSTATION;
         DestinyApiClient destinyApiClient = new DestinyApiClient(request, type);
 
-        destinyApiClient.getGrimoireDefinitions();
+        GrimoireDefinitionsResponse grimoireDefinitionsResponse = destinyApiClient.getGrimoireDefinitions();
 
-        UserInfoResponse userInfoResponse = destinyApiClient.getUserInfo("soramusoka");
+        UserInfoResponse userInfoResponse = destinyApiClient.getUserInfo("Miles-Tails");
         for (UserInfo userInfo : userInfoResponse.Response) {
             String membershipId = userInfo.membershipId;
+
+            Thread.sleep(100);
+            AccountGrimoireResponse accountGrimoireResponse
+                    = destinyApiClient.getGrimoire(membershipId, true, true, true);
 
             Thread.sleep(100);
             AccountItemsResponse accountItemsResponse
