@@ -46,7 +46,8 @@ public class Main {
 
         GrimoireDefinitionsResponse grimoireDefinitionsResponse = destinyApiClient.getGrimoireDefinitions();
 
-        UserInfoResponse userInfoResponse = destinyApiClient.getUserInfo("Miles-Tails");
+        // Miles-Tails, soramusoka, damnednoiz, MattSilver92
+        UserInfoResponse userInfoResponse = destinyApiClient.getUserInfo("damnednoiz");
         for (UserInfo userInfo : userInfoResponse.Response) {
             String membershipId = userInfo.membershipId;
 
@@ -75,7 +76,22 @@ public class Main {
                 Thread.sleep(100);
                 CharacterStatsResponse characterStatsResponse
                         = destinyApiClient.getCharacterStats(membershipId, characterId,
-                        ActivityType.AllArena, StatGroupType.AllTypes, PeriodType.AllTime, null, null, null, null);
+                        ActivityType.AllArena, StatGroupType.AllTypes, PeriodType.Daily, "2015-08", "2015-09", "2015-09-01", "2015-09-30");
+
+                Thread.sleep(100);
+                characterStatsResponse
+                        = destinyApiClient.getCharacterStats(membershipId, characterId,
+                        ActivityType.AllArena, StatGroupType.AllTypes, PeriodType.Monthly, "2015-08", "2015-09", "2015-09-01", "2015-09-30");
+
+                Thread.sleep(100);
+                characterStatsResponse
+                        = destinyApiClient.getCharacterStats(membershipId, characterId,
+                        ActivityType.AllArena, StatGroupType.AllTypes, PeriodType.AllTime, "2015-08", "2015-09", "2015-09-01", "2015-09-30");
+
+                Thread.sleep(100);
+                characterStatsResponse
+                        = destinyApiClient.getCharacterStats(membershipId, characterId,
+                        ActivityType.AllArena, StatGroupType.AllTypes, PeriodType.Activity, "2015-08", "2015-09", "2015-09-01", "2015-09-30");
 
                 Thread.sleep(100);
                 CharacterProgressionResponse characterProgressionResponse

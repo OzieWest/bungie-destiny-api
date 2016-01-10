@@ -6,5 +6,5 @@ import java.util.LinkedHashMap;
 
 public class AccountStatSummary {
     public AccountStatResults results;
-    public ForAllTime<LinkedHashMap<String, StatValue>> merged;
+    public ForTime<LinkedHashMap<String, StatValue>> merged;
 }

@@ -5,6 +5,6 @@ import com.soramusoka.destinyApiClient.dto_layer.common.StatValue;
 import java.util.LinkedHashMap;
 
 public class AccountStatResults {
-    public ForAllTime<LinkedHashMap<String, StatValue>> allPvE;
-    public ForAllTime<LinkedHashMap<String, StatValue>> allPvP;
+    public ForTime<LinkedHashMap<String, StatValue>> allPvE;
+    public ForTime<LinkedHashMap<String, StatValue>> allPvP;
 }
