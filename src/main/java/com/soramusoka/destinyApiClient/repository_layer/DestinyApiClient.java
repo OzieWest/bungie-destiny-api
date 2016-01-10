@@ -15,6 +15,7 @@ import com.soramusoka.destinyApiClient.dto_layer.aggregate_activity_stats.Aggreg
 import com.soramusoka.destinyApiClient.dto_layer.character_activities.CharacterActivitiesResponse;
 import com.soramusoka.destinyApiClient.dto_layer.character_inventory.CharacterInventoryResponse;
 import com.soramusoka.destinyApiClient.dto_layer.character_progression.CharacterProgressionResponse;
+import com.soramusoka.destinyApiClient.dto_layer.grimoire_definitions.GrimoireDefinitionsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.inventory_item.InventoryItemResponse;
 import com.soramusoka.destinyApiClient.dto_layer.user_info.UserInfoResponse;
 import com.soramusoka.destinyApiClient.dto_layer.membership_id_response.MembershipIdResponse;
@@ -588,6 +589,26 @@ public class DestinyApiClient {
             String data = this.Request.getUrl(url);
 
             CharacterStatsResponse response = this.Mapper.readValue(data, CharacterStatsResponse.class);
+            if (response.ErrorCode != 1)
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
+            return response;
+        } catch (Exception e) {
+            throw new ApiClientException(e);
+        }
+    }
+
+    /**
+     * Gets Grimoire definitions.
+     *
+     * @return GrimoireDefinitionsResponse
+     * @throws ApiClientException
+     */
+    public GrimoireDefinitionsResponse getGrimoireDefinitions() throws ApiClientException {
+        try {
+            String url = this.formUrl("/Vanguard/Grimoire/Definition/");
+            String data = this.Request.getUrl(url);
+
+            GrimoireDefinitionsResponse response = this.Mapper.readValue(data, GrimoireDefinitionsResponse.class);
             if (response.ErrorCode != 1)
                 throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
             return response;

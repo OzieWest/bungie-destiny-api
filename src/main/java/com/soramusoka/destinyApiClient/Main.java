@@ -42,6 +42,8 @@ public class Main {
         MembershipType type = MembershipType.PLAYSTATION;
         DestinyApiClient destinyApiClient = new DestinyApiClient(request, type);
 
+        destinyApiClient.getGrimoireDefinitions();
+
         UserInfoResponse userInfoResponse = destinyApiClient.getUserInfo("soramusoka");
         for (UserInfo userInfo : userInfoResponse.Response) {
             String membershipId = userInfo.membershipId;
