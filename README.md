@@ -8,7 +8,10 @@ MembershipType type = MembershipType.PLAYSTATION;
 DestinyApiClient destinyApiClient = new DestinyApiClient(request, type);
 
 // Returns a list of Destiny memberships given a full Gamertag or PSN ID
-destinyApiClient.getUserInfoByDisplayName(displayName);
+destinyApiClient.getUserInfo(displayName);
+
+// Returns the numerical id of a player based on their display name, zero if not found.
+destinyApiClient.getMembershipId(displayName, ignorecase)
 
 // Returns Destiny account information for the supplied membership in a compact summary form.
 destinyApiClient.getAccountSummary(membershipId, withDefinitions);
@@ -46,8 +49,20 @@ destinyApiClient.getAccountTriumphs(membershipId, withDefinitions);
 // Gets the available post game carnage report for the activity ID.
 destinyApiClient.getPostGameCarnageReport(activityHashId, withDefinitions);
 
-// Returns the numerical id of a player based on their display name, zero if not found.
-destinyApiClient.getMembershipIdByDisplayName(displayName, ignorecase);
+// Retrieve the details of a Destiny Item.
+destinyApiClient.getInventoryItem(membershipId, characterId, itemInstanceId, withDefinitions);
+
+// Gets historical stats for indicated character.
+destinyApiClient.getCharacterStats(String membershipId, String characterId,
+        ActivityType modes, StatGroupType groups, PeriodType period,
+        String monthstart, String monthend,
+        String daystart, String dayend)
+
+// Gets Grimoire definitions.
+destinyApiClient.getGrimoireDefinitions()
+
+// Gets someone else's Grimoire.
+destinyApiClient.getGrimoire(membershipId, single, flavour, withDefinitions);
 
 // others in progress...
 ```
