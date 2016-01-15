@@ -3,10 +3,7 @@ package com.soramusoka.destinyApiClient.repository_layer;
 import com.soramusoka.destinyApiClient.dto_layer.ApiClientException;
 import com.soramusoka.destinyApiClient.dto_layer.account_grimoire.AccountGrimoireResponse;
 import com.soramusoka.destinyApiClient.dto_layer.character_stats.CharacterStatsResponse;
-import com.soramusoka.destinyApiClient.dto_layer.common.ActivityType;
-import com.soramusoka.destinyApiClient.dto_layer.common.MembershipType;
-import com.soramusoka.destinyApiClient.dto_layer.common.PeriodType;
-import com.soramusoka.destinyApiClient.dto_layer.common.StatGroupType;
+import com.soramusoka.destinyApiClient.dto_layer.common.*;
 import com.soramusoka.destinyApiClient.dto_layer.account_items.AccountItemsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.account_stats.AccountStatsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.account_summary.AccountSummaryResponse;
@@ -18,6 +15,7 @@ import com.soramusoka.destinyApiClient.dto_layer.character_inventory.CharacterIn
 import com.soramusoka.destinyApiClient.dto_layer.character_progression.CharacterProgressionResponse;
 import com.soramusoka.destinyApiClient.dto_layer.grimoire_definitions.GrimoireDefinitionsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.inventory_item.InventoryItemResponse;
+import com.soramusoka.destinyApiClient.dto_layer.talent_node_steps.TalentNodeStepsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.user_info.UserInfoResponse;
 import com.soramusoka.destinyApiClient.dto_layer.membership_id_response.MembershipIdResponse;
 import com.soramusoka.destinyApiClient.dto_layer.post_game_carnage_report.PostGameCarnageReportResponse;
@@ -654,5 +652,61 @@ public class DestinyApiClient {
      */
     public AccountGrimoireResponse getGrimoire(String membershipId, boolean single, boolean flavour) throws ApiClientException {
         return this.getGrimoire(membershipId, single, flavour, false);
+    }
+
+    /**
+     * Gets a page list of Destiny talent node steps, ordered by the step name.
+     *
+     * @param count
+     * @param page
+     * @param name
+     * @param weaponPerformance
+     * @param lightAbilities
+     * @param direction
+     * @param impactEffects
+     * @param guardianAttributes
+     * @param damageTypes
+     * @param withDefinitions
+     * @return TalentNodeStepsResponse
+     * @throws ApiClientException
+     */
+    public TalentNodeStepsResponse getTalentNodeSteps(int count, int page, String name, WeaponPerformanceType weaponPerformance,
+                                                      LightAbilityType lightAbilities, DirectionType direction,
+                                                      ImpactEffectType impactEffects, AttributeType guardianAttributes,
+                                                      DamageType damageTypes, boolean withDefinitions) throws ApiClientException {
+        try {
+            String query = "?count=" + count + "&page=" + page + "&name=" + name + "&definitions=" + withDefinitions;
+
+            if (direction != null) query += "&direction=" + direction.getValue();
+            if (damageTypes != null) query += "&damageTypes=" + damageTypes.getValue();
+            if (impactEffects != null) query += "&impactEffects=" + impactEffects.getValue();
+            if (guardianAttributes != null) query += "&guardianAttributes=" + guardianAttributes.getValue();
+            if (lightAbilities != null) query += "&lightAbilities=" + lightAbilities.getValue();
+            if (weaponPerformance != null) query += "&weaponPerformance=" + weaponPerformance.getValue();
+
+            String url = this.formUrl("/Explorer/TalentNodeSteps/" + query);
+            String data = this.Request.getUrl(url);
+
+            TalentNodeStepsResponse response = this.Mapper.readValue(data, TalentNodeStepsResponse.class);
+            if (response.ErrorCode != 1)
+                throw new ApiClientException(response.Message, response.ErrorStatus, response.ErrorCode);
+            return response;
+        } catch (Exception e) {
+            throw new ApiClientException(e);
+        }
+    }
+
+    /**
+     * Gets a page list of Destiny talent node steps, ordered by the step name.
+     *
+     * @param count
+     * @param page
+     * @param name
+     * @param withDefinitions
+     * @return TalentNodeStepsResponse
+     * @throws ApiClientException
+     */
+    public TalentNodeStepsResponse getTalentNodeSteps(int count, int page, String name, boolean withDefinitions) throws ApiClientException {
+        return this.getTalentNodeSteps(count, page, name, null, null, null, null, null, null, withDefinitions);
     }
 }

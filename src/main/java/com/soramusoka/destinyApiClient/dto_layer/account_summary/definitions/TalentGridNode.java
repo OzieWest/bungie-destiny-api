@@ -1,5 +1,7 @@
 package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
 
+import com.soramusoka.destinyApiClient.dto_layer.common.TalentGridNodeStep;
+
 public class TalentGridNode {
     public int nodeIndex;
     public long nodeHash;

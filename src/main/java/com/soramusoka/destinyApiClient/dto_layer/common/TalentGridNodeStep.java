@@ -1,6 +1,9 @@
-package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
+package com.soramusoka.destinyApiClient.dto_layer.common;
 
-public class TalentGridNodeStep {
+import com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions.ActivationRequirement;
+import com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions.PerkGroups;
+
+public class TalentGridNodeStep extends BaseDefinition {
     public int stepIndex;
     public long nodeStepHash;
     public String nodeStepName;

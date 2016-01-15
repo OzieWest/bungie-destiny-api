@@ -15,6 +15,7 @@ import com.soramusoka.destinyApiClient.dto_layer.character_progression.Character
 import com.soramusoka.destinyApiClient.dto_layer.character_stats.CharacterStatsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.common.*;
 import com.soramusoka.destinyApiClient.dto_layer.grimoire_definitions.GrimoireDefinitionsResponse;
+import com.soramusoka.destinyApiClient.dto_layer.talent_node_steps.TalentNodeStepsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.unique_weapons_stats.UniqueWeaponsStatsResponse;
 import com.soramusoka.destinyApiClient.dto_layer.user_info.UserInfo;
 import com.soramusoka.destinyApiClient.dto_layer.user_info.UserInfoResponse;
@@ -45,6 +46,8 @@ public class Main {
         DestinyApiClient destinyApiClient = new DestinyApiClient(request, type);
 
         GrimoireDefinitionsResponse grimoireDefinitionsResponse = destinyApiClient.getGrimoireDefinitions();
+
+        TalentNodeStepsResponse talentNodeStepsResponse = destinyApiClient.getTalentNodeSteps(500, 0, "", true);
 
         // Miles-Tails, soramusoka, damnednoiz, MattSilver92
         UserInfoResponse userInfoResponse = destinyApiClient.getUserInfo("damnednoiz");

@@ -56,4 +56,5 @@ public class ItemDefinition extends BaseDefinition {
     public boolean allowActions;
     public long questTrackingUnlockValueHash;
     public long bountyResetUnlockHash;
+    public long uniquenessHash;
 }

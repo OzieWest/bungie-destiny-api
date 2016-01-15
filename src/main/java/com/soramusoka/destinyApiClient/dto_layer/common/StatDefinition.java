@@ -1,4 +1,4 @@
-package com.soramusoka.destinyApiClient.dto_layer.account_summary.definitions;
+package com.soramusoka.destinyApiClient.dto_layer.common;
 
 import com.soramusoka.destinyApiClient.dto_layer.common.BaseDefinition;
 
