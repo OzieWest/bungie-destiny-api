@@ -24,9 +24,6 @@ import com.soramusoka.destinyApiClient.dto_layer.unique_weapons_stats.UniqueWeap
 import com.soramusoka.destinyApiClient.service_layer.IRequest;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DestinyApiClient {
     private MembershipType _membershipType = null;
 
@@ -53,7 +50,7 @@ public class DestinyApiClient {
     /**
      * Returns a list of Destiny memberships given a full Gamertag or PSN ID.
      *
-     * @param displayName
+     * @param displayName The full gamertag or PSN id of the player. Spaces and case are ignored.
      * @return UserInfoResponse
      * @throws ApiClientException
      */
@@ -74,8 +71,8 @@ public class DestinyApiClient {
     /**
      * Returns the numerical id of a player based on their display name, zero if not found.
      *
-     * @param displayName
-     * @param ignorecase
+     * @param displayName The full gamertag or PSN id of the player. Spaces and case are ignored.
+     * @param ignorecase  Default is false when not specified. True to cause a caseless search to be used.
      * @return MembershipIdResponse
      * @throws ApiClientException
      */
@@ -97,7 +94,7 @@ public class DestinyApiClient {
     /**
      * Returns the numerical id of a player based on their display name, zero if not found.
      *
-     * @param displayName
+     * @param displayName The full gamertag or PSN id of the player. Spaces and case are ignored.
      * @return MembershipIdResponse
      * @throws ApiClientException
      */
@@ -108,8 +105,8 @@ public class DestinyApiClient {
     /**
      * Returns Destiny account information for the supplied membership in a compact summary form.
      *
-     * @param membershipId
-     * @param withDefinitions
+     * @param membershipId    Destiny membership ID.
+     * @param withDefinitions If False, will not return definition information. If False, will not return definition information.
      * @return AccountSummaryResponse
      * @throws ApiClientException
      */
@@ -130,7 +127,7 @@ public class DestinyApiClient {
     /**
      * Returns Destiny account information for the supplied membership in a compact summary form.
      *
-     * @param membershipId
+     * @param membershipId Destiny membership ID.
      * @return AccountSummaryResponse
      * @throws ApiClientException
      */
@@ -161,9 +158,9 @@ public class DestinyApiClient {
     /**
      * Provides the progression details for the supplied character.
      *
-     * @param membershipId
-     * @param characterId
-     * @param withDefinitions
+     * @param membershipId    Destiny membership ID.
+     * @param characterId     ID of the character.
+     * @param withDefinitions If False, will not return definition information.
      * @return CharacterProgressionResponse
      * @throws ApiClientException
      */
@@ -184,8 +181,8 @@ public class DestinyApiClient {
     /**
      * Provides the progression details for the supplied character.
      *
-     * @param membershipId
-     * @param characterId
+     * @param membershipId Destiny membership ID.
+     * @param characterId  ID of the character.
      * @return CharacterProgressionResponse
      * @throws ApiClientException
      */
@@ -196,9 +193,9 @@ public class DestinyApiClient {
     /**
      * Retrieve the inventory for the supplied character.
      *
-     * @param membershipId
-     * @param characterId
-     * @param withDefinitions
+     * @param membershipId    Destiny membership ID.
+     * @param characterId     ID of the character.
+     * @param withDefinitions If False, will not return definition information.
      * @return CharacterActivitiesResponse
      * @throws ApiClientException
      */
@@ -219,8 +216,8 @@ public class DestinyApiClient {
     /**
      * Retrieve the inventory for the supplied character.
      *
-     * @param membershipId
-     * @param characterId
+     * @param membershipId Destiny membership ID.
+     * @param characterId  ID of the character.
      * @return CharacterActivitiesResponse
      * @throws ApiClientException
      */
@@ -231,9 +228,9 @@ public class DestinyApiClient {
     /**
      * Returns summary information for the inventory for the supplied character.
      *
-     * @param membershipId
-     * @param characterId
-     * @param withDefinitions
+     * @param membershipId    Destiny membership ID.
+     * @param characterId     ID of the character.
+     * @param withDefinitions If False, will not return definition information.
      * @return CharacterInventoryResponse
      * @throws ApiClientException
      */
@@ -254,8 +251,8 @@ public class DestinyApiClient {
     /**
      * Returns summary information for the inventory for the supplied character.
      *
-     * @param membershipId
-     * @param characterId
+     * @param membershipId Destiny membership ID.
+     * @param characterId  ID of the character.
      * @return CharacterInventoryResponse
      * @throws ApiClientException
      */
@@ -266,12 +263,15 @@ public class DestinyApiClient {
     /**
      * Gets activity history stats for indicated character.
      *
-     * @param membershipId
-     * @param characterId
-     * @param count
-     * @param page
-     * @param mode
-     * @param withDefinitions
+     * @param membershipId    Destiny membership ID.
+     * @param characterId     ID of the character.
+     * @param count           Number of rows to return
+     * @param page            Page number to return, starting with 0.
+     * @param mode            A filter for the activity mode to be returned. None returns all activities.
+     *                        Values: None, Story, Strike, Raid, AllPvP, Patrol, AllPvE, PvPIntroduction, ThreeVsThree,
+     *                        Control, Lockdown, Team, FreeForAll, Nightfall, Heroic, AllStrikes, IronBanner, AllArena,
+     *                        Arena, ArenaChallenge, TrialsOfOsiris, Elimination, Rift, Mayhem, ZoneControl, Racing
+     * @param withDefinitions If False, will not return definition information.
      * @return ActivityHistoryStatsResponse
      * @throws ApiClientException
      */
@@ -297,11 +297,14 @@ public class DestinyApiClient {
     /**
      * Gets activity history stats for indicated character.
      *
-     * @param membershipId
-     * @param characterId
-     * @param count
-     * @param page
-     * @param mode
+     * @param membershipId Destiny membership ID.
+     * @param characterId  ID of the character.
+     * @param count        Number of rows to return
+     * @param page         Page number to return, starting with 0.
+     * @param mode         A filter for the activity mode to be returned. None returns all activities.
+     *                     Values: None, Story, Strike, Raid, AllPvP, Patrol, AllPvE, PvPIntroduction, ThreeVsThree,
+     *                     Control, Lockdown, Team, FreeForAll, Nightfall, Heroic, AllStrikes, IronBanner, AllArena,
+     *                     Arena, ArenaChallenge, TrialsOfOsiris, Elimination, Rift, Mayhem, ZoneControl, Racing
      * @return ActivityHistoryStatsResponse
      * @throws ApiClientException
      */
@@ -312,10 +315,10 @@ public class DestinyApiClient {
     /**
      * Gets activity history stats for indicated character.
      *
-     * @param membershipId
-     * @param characterId
-     * @param count
-     * @param page
+     * @param membershipId Destiny membership ID.
+     * @param characterId  ID of the character.
+     * @param count        Number of rows to return
+     * @param page         Page number to return, starting with 0.
      * @return ActivityHistoryStatsResponse
      * @throws ApiClientException
      */
@@ -326,9 +329,9 @@ public class DestinyApiClient {
     /**
      * Gets all activities the character has participated in together with aggregate statistics for those activities.
      *
-     * @param membershipId
-     * @param characterId
-     * @param withDefinitions
+     * @param membershipId    Destiny membership ID.
+     * @param characterId     ID of the character.
+     * @param withDefinitions If False, will not return definition information.
      * @return AggregateActivityStatsResponse
      * @throws ApiClientException
      */
@@ -349,8 +352,8 @@ public class DestinyApiClient {
     /**
      * Gets all activities the character has participated in together with aggregate statistics for those activities.
      *
-     * @param membershipId
-     * @param characterId
+     * @param membershipId Destiny membership ID.
+     * @param characterId  ID of the character.
      * @return AggregateActivityStatsResponse
      * @throws ApiClientException
      */
@@ -359,10 +362,11 @@ public class DestinyApiClient {
     }
 
     /**
-     * Returns information about all items on the for the supplied Destiny Membership ID, and a minimal set of character information so that it can be used.
+     * Returns information about all items on the for the supplied Destiny Membership ID,
+     * and a minimal set of character information so that it can be used.
      *
-     * @param membershipId
-     * @param withDefinitions
+     * @param membershipId    Destiny membership ID.
+     * @param withDefinitions If False, will not return definition information.
      * @return AccountItemsResponse
      * @throws ApiClientException
      */
@@ -381,9 +385,10 @@ public class DestinyApiClient {
     }
 
     /**
-     * Returns information about all items on the for the supplied Destiny Membership ID, and a minimal set of character information so that it can be used.
+     * Returns information about all items on the for the supplied Destiny Membership ID,
+     * and a minimal set of character information so that it can be used.
      *
-     * @param membershipId
+     * @param membershipId Destiny membership ID.
      * @return AccountItemsResponse
      * @throws ApiClientException
      */
@@ -394,8 +399,9 @@ public class DestinyApiClient {
     /**
      * Gets aggregate historical stats organized around each character for a given account.
      *
-     * @param membershipId
-     * @param groups
+     * @param membershipId Destiny membership ID.
+     * @param groups       Groups of stats to include, otherwise only general stats are returned.
+     *                     Comma separated list is allowed. Values: General, Weapons, Medals, Enemies.
      * @return AccountStatsResponse
      * @throws ApiClientException
      */
@@ -417,9 +423,9 @@ public class DestinyApiClient {
     /**
      * Gets details about unique weapon usage, including all exotic weapons.
      *
-     * @param membershipId
-     * @param characterId
-     * @param withDefinitions
+     * @param membershipId    Destiny membership ID.
+     * @param characterId     ID of the character.
+     * @param withDefinitions If False, will not return definition information.
      * @return UniqueWeaponsStatsResponse
      * @throws ApiClientException
      */
@@ -440,8 +446,8 @@ public class DestinyApiClient {
     /**
      * Gets details about unique weapon usage, including all exotic weapons.
      *
-     * @param membershipId
-     * @param characterId
+     * @param membershipId Destiny membership ID.
+     * @param characterId  ID of the character.
      * @return UniqueWeaponsStatsResponse
      * @throws ApiClientException
      */
@@ -452,8 +458,8 @@ public class DestinyApiClient {
     /**
      * Provides Triumphs for a given Destiny account.
      *
-     * @param membershipId
-     * @param withDefinitions
+     * @param membershipId    Destiny membership ID.
+     * @param withDefinitions If False, will not return definition information.
      * @return AccountTriumphsResponse
      * @throws ApiClientException
      */
@@ -475,7 +481,7 @@ public class DestinyApiClient {
     /**
      * Provides Triumphs for a given Destiny account.
      *
-     * @param membershipId
+     * @param membershipId Destiny membership ID.
      * @return AccountTriumphsResponse
      * @throws ApiClientException
      */
@@ -486,8 +492,8 @@ public class DestinyApiClient {
     /**
      * Gets the available post game carnage report for the activity ID.
      *
-     * @param activityHashId
-     * @param withDefinitions
+     * @param activityHashId  The ID of the activity whose PGCR is requested.
+     * @param withDefinitions If False, will not return definition information.
      * @return PostGameCarnageReportResponse
      * @throws ApiClientException
      */
@@ -509,7 +515,7 @@ public class DestinyApiClient {
     /**
      * Gets the available post game carnage report for the activity ID.
      *
-     * @param activityHashId
+     * @param activityHashId The ID of the activity whose PGCR is requested.
      * @return PostGameCarnageReportResponse
      * @throws ApiClientException
      */
@@ -520,10 +526,10 @@ public class DestinyApiClient {
     /**
      * Retrieve the details of a Destiny Item.
      *
-     * @param membershipId
-     * @param characterId
-     * @param itemInstanceId
-     * @param withDefinitions
+     * @param membershipId    Destiny membership ID.
+     * @param characterId     ID of the character.
+     * @param itemInstanceId  The Instance ID of the destiny item. Not the Reference ID, pay attention.
+     * @param withDefinitions If False, will not return definition information.
      * @return InventoryItemResponse
      * @throws ApiClientException
      */
@@ -545,9 +551,9 @@ public class DestinyApiClient {
     /**
      * Retrieve the details of a Destiny Item.
      *
-     * @param membershipId
-     * @param characterId
-     * @param itemInstanceId
+     * @param membershipId   Destiny membership ID.
+     * @param characterId    ID of the character.
+     * @param itemInstanceId The Instance ID of the destiny item. Not the Reference ID, pay attention.
      * @return InventoryItemResponse
      * @throws ApiClientException
      */
@@ -559,15 +565,20 @@ public class DestinyApiClient {
     /**
      * Gets historical stats for indicated character.
      *
-     * @param membershipId
-     * @param characterId
-     * @param modes
-     * @param groups
-     * @param period
-     * @param monthstart
-     * @param monthend
-     * @param daystart
-     * @param dayend
+     * @param membershipId Destiny membership ID.
+     * @param characterId  ID of the character.
+     * @param modes        Game modes to return. Values: None, Story, Strike, Raid, AllPvP, Patrol, AllPvE,
+     *                     PvPIntroduction, ThreeVsThree, Control, Lockdown, Team, FreeForAll, Nightfall, Heroic,
+     *                     AllStrikes, IronBanner, AllArena, Arena, ArenaChallenge, TrialsOfOsiris, Elimination,
+     *                     Rift, Mayhem, ZoneControl, Racing
+     * @param groups       Group of stats to include, otherwise only general stats are returned.
+     *                     Comma separated list is allowed. Values: General, Weapons, Medals, Enemies
+     * @param period       Indicates a specific period type to return. Optional. May be: Daily, Monthly,
+     *                     AllTime, or Activity
+     * @param monthstart   First month to return when monthly stats are requested. Use the format YYYY-MM.
+     * @param monthend     Last month to return when monthly stats are requested. Use the format YYYY-MM.
+     * @param daystart     First day to return when daily stats are requested. Use the format YYYY-MM-DD
+     * @param dayend       Last day to return when daily stats are requested. Use the format YYYY-MM-DD.
      * @return CharacterStatsResponse
      * @throws ApiClientException
      */
@@ -619,10 +630,10 @@ public class DestinyApiClient {
     /**
      * Gets someone else's Grimoire.
      *
-     * @param membershipId
-     * @param single
-     * @param flavour
-     * @param withDefinitions
+     * @param membershipId    Destiny membership ID.
+     * @param single          Indicates data for a single card should be returned.
+     * @param flavour         Indicates flavour stats should be included with player card data.
+     * @param withDefinitions If False, will not return definition information.
      * @return AccountGrimoireResponse
      * @throws ApiClientException
      */
@@ -644,9 +655,9 @@ public class DestinyApiClient {
     /**
      * Gets someone else's Grimoire.
      *
-     * @param membershipId
-     * @param single
-     * @param flavour
+     * @param membershipId Destiny membership ID.
+     * @param single       Indicates data for a single card should be returned.
+     * @param flavour      Indicates flavour stats should be included with player card data.
      * @return AccountGrimoireResponse
      * @throws ApiClientException
      */
@@ -657,16 +668,21 @@ public class DestinyApiClient {
     /**
      * Gets a page list of Destiny talent node steps, ordered by the step name.
      *
-     * @param count
-     * @param page
-     * @param name
-     * @param weaponPerformance
-     * @param lightAbilities
-     * @param direction
-     * @param impactEffects
-     * @param guardianAttributes
-     * @param damageTypes
-     * @param withDefinitions
+     * @param count              Number of rows to return. Use 10, 25, 50, 100, 500
+     * @param page               Page number to return, starting with 0.
+     * @param name               Name of items to return (partial match, no case). Omit for all items.
+     * @param weaponPerformance  Node steps in one of these categories, omit for all steps. RateOfFire, Damage, Accuracy,
+     *                           Range, Zoom, Recoil, Ready, Reload, HairTrigger, AmmoAndMagazine, TrackingAndDetonation,
+     *                           ShotgunSpread, ChargeTime
+     * @param lightAbilities     Node steps in one of these categories, omit for all steps. Grenades, Melee,
+     *                           MovementModes, Orbs, SuperEnergy, SuperMods
+     * @param direction          Order to sort steps (by name): Ascending or Descending
+     * @param impactEffects      Node steps in one of these categories, omit for all steps. ArmorPiercing, Ricochet,
+     *                           Flinch, CollateralDamage, Disorient, HighlightTarget
+     * @param guardianAttributes Node steps in one of these categories, omit for all steps. Stats, Shields, Health,
+     *                           Revive, AimUnderFire, Radar, Invisibility, Reputations
+     * @param damageTypes        Node steps in one of these categories, omit for all steps. Kinetic, Arc, Solar, Void
+     * @param withDefinitions    If False, will not return definition information.
      * @return TalentNodeStepsResponse
      * @throws ApiClientException
      */
@@ -699,10 +715,10 @@ public class DestinyApiClient {
     /**
      * Gets a page list of Destiny talent node steps, ordered by the step name.
      *
-     * @param count
-     * @param page
-     * @param name
-     * @param withDefinitions
+     * @param count           Number of rows to return. Use 10, 25, 50, 100, 500
+     * @param page            Page number to return, starting with 0.
+     * @param name            Name of items to return (partial match, no case). Omit for all items.
+     * @param withDefinitions If False, will not return definition information.
      * @return TalentNodeStepsResponse
      * @throws ApiClientException
      */
