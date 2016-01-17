@@ -24,6 +24,8 @@ import com.soramusoka.destinyApiClient.dto_layer.unique_weapons_stats.UniqueWeap
 import com.soramusoka.destinyApiClient.service_layer.IRequest;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import java.text.MessageFormat;
+
 public class DestinyApiClient {
     private MembershipType _membershipType = null;
 
@@ -43,8 +45,8 @@ public class DestinyApiClient {
         this._membershipType = membershipType;
     }
 
-    private String formUrl(String url) {
-        return this.ApiRoot + url;
+    private String formUrl(String pattern, Object... arr) {
+        return this.ApiRoot + MessageFormat.format(pattern, arr);
     }
 
     /**
@@ -56,7 +58,7 @@ public class DestinyApiClient {
      */
     public UserInfoResponse getUserInfo(String displayName) throws ApiClientException {
         try {
-            String url = this.formUrl("/SearchDestinyPlayer/" + this._membershipType.getValue() + "/" + displayName);
+            String url = this.formUrl("/SearchDestinyPlayer/{0}/{1}", this._membershipType.getValue(), displayName);
             String data = this.Request.getUrl(url);
 
             UserInfoResponse response = this.Mapper.readValue(data, UserInfoResponse.class);
@@ -78,8 +80,8 @@ public class DestinyApiClient {
      */
     public MembershipIdResponse getMembershipId(String displayName, boolean ignorecase) throws ApiClientException {
         try {
-            String query = "?ignorecase=" + ignorecase;
-            String url = this.formUrl("/" + this._membershipType.getValue() + "/Stats/GetMembershipIdByDisplayName/" + displayName + query);
+            String query = "ignorecase=" + ignorecase;
+            String url = this.formUrl("/{0}/Stats/GetMembershipIdByDisplayName/{1}?{2}", this._membershipType.getValue(), displayName, query);
             String data = this.Request.getUrl(url);
 
             MembershipIdResponse response = this.Mapper.readValue(data, MembershipIdResponse.class);
@@ -112,7 +114,8 @@ public class DestinyApiClient {
      */
     public AccountSummaryResponse getAccountSummary(String membershipId, boolean withDefinitions) throws ApiClientException {
         try {
-            String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Summary" + "?definitions=" + withDefinitions);
+            String query = "definitions=" + withDefinitions;
+            String url = this.formUrl("/{0}/Account/{1}/Summary?{2}", this._membershipType.getValue(), membershipId, query);
             String data = this.Request.getUrl(url);
 
             AccountSummaryResponse response = this.Mapper.readValue(data, AccountSummaryResponse.class);
@@ -166,7 +169,8 @@ public class DestinyApiClient {
      */
     public CharacterProgressionResponse getCharacterProgression(String membershipId, String characterId, boolean withDefinitions) throws ApiClientException {
         try {
-            String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Character/" + characterId + "/Progression" + "?definitions=" + withDefinitions);
+            String query = "definitions=" + withDefinitions;
+            String url = this.formUrl("/{0}/Account/{1}/Character/{2}/Progression?{3}", this._membershipType.getValue(), membershipId, characterId, query);
             String data = this.Request.getUrl(url);
 
             CharacterProgressionResponse response = this.Mapper.readValue(data, CharacterProgressionResponse.class);
@@ -201,7 +205,8 @@ public class DestinyApiClient {
      */
     public CharacterActivitiesResponse getCharacterActivities(String membershipId, String characterId, boolean withDefinitions) throws ApiClientException {
         try {
-            String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Character/" + characterId + "/Activities" + "?definitions=" + withDefinitions);
+            String query = "definitions=" + withDefinitions;
+            String url = this.formUrl("/{0}/Account/{1}/Character/{2}/Activities?{3}", this._membershipType.getValue(), membershipId, characterId, query);
             String data = this.Request.getUrl(url);
 
             CharacterActivitiesResponse response = this.Mapper.readValue(data, CharacterActivitiesResponse.class);
@@ -236,7 +241,8 @@ public class DestinyApiClient {
      */
     public CharacterInventoryResponse getCharacterInventorySummary(String membershipId, String characterId, boolean withDefinitions) throws ApiClientException {
         try {
-            String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Character/" + characterId + "/Inventory/Summary" + "?definitions=" + withDefinitions);
+            String query = "definitions=" + withDefinitions;
+            String url = this.formUrl("/{0}/Account/{1}/Character/{2}/Inventory/Summary?{3}", this._membershipType.getValue(), membershipId, characterId, query);
             String data = this.Request.getUrl(url);
 
             CharacterInventoryResponse response = this.Mapper.readValue(data, CharacterInventoryResponse.class);
@@ -282,7 +288,7 @@ public class DestinyApiClient {
                     "&count=" + count +
                     "&mode=" + (mode == null ? ActivityType.None.getValue() : mode.getValue());
 
-            String url = this.formUrl("/Stats/ActivityHistory/" + this._membershipType.getValue() + "/" + membershipId + "/" + characterId + "/?" + query);
+            String url = this.formUrl("/Stats/ActivityHistory/{0}/{1}/{2}/?{3}", this._membershipType.getValue(), membershipId, characterId, query);
             String data = this.Request.getUrl(url);
 
             ActivityHistoryStatsResponse response = this.Mapper.readValue(data, ActivityHistoryStatsResponse.class);
@@ -337,7 +343,8 @@ public class DestinyApiClient {
      */
     public AggregateActivityStatsResponse getAggregateActivityStats(String membershipId, String characterId, boolean withDefinitions) throws ApiClientException {
         try {
-            String url = this.formUrl("/Stats/AggregateActivityStats/" + this._membershipType.getValue() + "/" + membershipId + "/" + characterId + "?definitions=" + withDefinitions);
+            String query = "definitions=" + withDefinitions;
+            String url = this.formUrl("/Stats/AggregateActivityStats/{0}/{1}/{2}?{3}", this._membershipType.getValue(), membershipId, characterId, query);
             String data = this.Request.getUrl(url);
 
             AggregateActivityStatsResponse response = this.Mapper.readValue(data, AggregateActivityStatsResponse.class);
@@ -372,7 +379,8 @@ public class DestinyApiClient {
      */
     public AccountItemsResponse getAccountItems(String membershipId, boolean withDefinitions) throws ApiClientException {
         try {
-            String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Items" + "?definitions=" + withDefinitions);
+            String query = "definitions=" + withDefinitions;
+            String url = this.formUrl("/{0}/Account/{1}/Items?{2}", this._membershipType.getValue(), membershipId, query);
             String data = this.Request.getUrl(url);
 
             AccountItemsResponse response = this.Mapper.readValue(data, AccountItemsResponse.class);
@@ -407,8 +415,8 @@ public class DestinyApiClient {
      */
     public AccountStatsResponse getAccountStats(String membershipId, StatGroupType groups) throws ApiClientException {
         try {
-            String query = "?groups=" + groups.getValue();
-            String url = this.formUrl("/Stats/Account/" + this._membershipType.getValue() + "/" + membershipId + query);
+            String query = "groups=" + groups.getValue();
+            String url = this.formUrl("/Stats/Account/{0}/{1}?{2}", this._membershipType.getValue(), membershipId, query);
             String data = this.Request.getUrl(url);
 
             AccountStatsResponse response = this.Mapper.readValue(data, AccountStatsResponse.class);
@@ -431,7 +439,8 @@ public class DestinyApiClient {
      */
     public UniqueWeaponsStatsResponse getUniqueWeaponsStats(String membershipId, String characterId, boolean withDefinitions) throws ApiClientException {
         try {
-            String url = this.formUrl("/Stats/UniqueWeapons/" + this._membershipType.getValue() + "/" + membershipId + "/" + characterId + "?definitions=" + withDefinitions);
+            String query = "definitions=" + withDefinitions;
+            String url = this.formUrl("/Stats/UniqueWeapons/{0}/{1}/{2}?{3}", this._membershipType.getValue(), membershipId, characterId, query);
             String data = this.Request.getUrl(url);
 
             UniqueWeaponsStatsResponse response = this.Mapper.readValue(data, UniqueWeaponsStatsResponse.class);
@@ -465,8 +474,8 @@ public class DestinyApiClient {
      */
     public AccountTriumphsResponse getAccountTriumphs(String membershipId, boolean withDefinitions) throws ApiClientException {
         try {
-            String query = "?definitions=" + withDefinitions;
-            String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Triumphs" + query);
+            String query = "definitions=" + withDefinitions;
+            String url = this.formUrl("/{0}/Account/{1}/Triumphs?{2}", this._membershipType.getValue(), membershipId, query);
             String data = this.Request.getUrl(url);
 
             AccountTriumphsResponse response = this.Mapper.readValue(data, AccountTriumphsResponse.class);
@@ -499,8 +508,8 @@ public class DestinyApiClient {
      */
     public PostGameCarnageReportResponse getPostGameCarnageReport(long activityHashId, boolean withDefinitions) throws ApiClientException {
         try {
-            String query = "?definitions=" + withDefinitions;
-            String url = this.formUrl("/Stats/PostGameCarnageReport/" + Long.toString(activityHashId) + query);
+            String query = "definitions=" + withDefinitions;
+            String url = this.formUrl("/Stats/PostGameCarnageReport/{0}?{1}", Long.toString(activityHashId), query);
             String data = this.Request.getUrl(url);
 
             PostGameCarnageReportResponse response = this.Mapper.readValue(data, PostGameCarnageReportResponse.class);
@@ -535,8 +544,8 @@ public class DestinyApiClient {
      */
     public InventoryItemResponse getInventoryItem(String membershipId, String characterId, String itemInstanceId, boolean withDefinitions) throws ApiClientException {
         try {
-            String query = "?definitions=" + withDefinitions;
-            String url = this.formUrl("/" + this._membershipType.getValue() + "/Account/" + membershipId + "/Character/" + characterId + "/Inventory/" + itemInstanceId + query);
+            String query = "definitions=" + withDefinitions;
+            String url = this.formUrl("/{0}/Account/{1}/Character/{2}/Inventory/{3}?{4}", this._membershipType.getValue(), membershipId, characterId, itemInstanceId, query);
             String data = this.Request.getUrl(url);
 
             InventoryItemResponse response = this.Mapper.readValue(data, InventoryItemResponse.class);
@@ -587,7 +596,7 @@ public class DestinyApiClient {
                                                     String monthstart, String monthend,
                                                     String daystart, String dayend) throws ApiClientException {
         try {
-            String query = "?groups=" + groups.getValue() +
+            String query = "groups=" + groups.getValue() +
                     "&modes=" + modes.getValue() +
                     "&period=" + period.getValue() +
                     "&monthstart=" + monthstart +
@@ -595,7 +604,7 @@ public class DestinyApiClient {
                     "&daystart=" + daystart +
                     "&dayend=" + dayend;
 
-            String url = this.formUrl("/Stats/" + this._membershipType.getValue() + "/" + membershipId + "/" + characterId + query);
+            String url = this.formUrl("/Stats/{0}/{1}/{2}?{3}", this._membershipType.getValue(), membershipId, characterId, query);
             String data = this.Request.getUrl(url);
 
             CharacterStatsResponse response = this.Mapper.readValue(data, CharacterStatsResponse.class);
@@ -639,8 +648,8 @@ public class DestinyApiClient {
      */
     public AccountGrimoireResponse getGrimoire(String membershipId, boolean single, boolean flavour, boolean withDefinitions) throws ApiClientException {
         try {
-            String query = "?definitions=" + withDefinitions;
-            String url = this.formUrl("/Vanguard/Grimoire/" + this._membershipType.getValue() + "/" + membershipId + query);
+            String query = "definitions=" + withDefinitions;
+            String url = this.formUrl("/Vanguard/Grimoire/{0}/{1}?{2}", this._membershipType.getValue(), membershipId, query);
             String data = this.Request.getUrl(url);
 
             AccountGrimoireResponse response = this.Mapper.readValue(data, AccountGrimoireResponse.class);
@@ -691,7 +700,7 @@ public class DestinyApiClient {
                                                       ImpactEffectType impactEffects, AttributeType guardianAttributes,
                                                       DamageType damageTypes, boolean withDefinitions) throws ApiClientException {
         try {
-            String query = "?count=" + count + "&page=" + page + "&name=" + name + "&definitions=" + withDefinitions;
+            String query = "count=" + count + "&page=" + page + "&name=" + name + "&definitions=" + withDefinitions;
 
             if (direction != null) query += "&direction=" + direction.getValue();
             if (damageTypes != null) query += "&damageTypes=" + damageTypes.getValue();
@@ -700,7 +709,7 @@ public class DestinyApiClient {
             if (lightAbilities != null) query += "&lightAbilities=" + lightAbilities.getValue();
             if (weaponPerformance != null) query += "&weaponPerformance=" + weaponPerformance.getValue();
 
-            String url = this.formUrl("/Explorer/TalentNodeSteps/" + query);
+            String url = this.formUrl("/Explorer/TalentNodeSteps?{0}", query);
             String data = this.Request.getUrl(url);
 
             TalentNodeStepsResponse response = this.Mapper.readValue(data, TalentNodeStepsResponse.class);
